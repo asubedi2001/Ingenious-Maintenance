@@ -175,10 +175,12 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 					for(int counter = 0; counter < game.players[find].getHand().getSize(); counter++){//DOES NOT GET STUCK IN THIS FOR LOOP
 						int color=game.players[find].getHand().getPiece(counter).getSecondaryHexagon().getColor();
 						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c,693,30));
+						//Fixing #4 issue in wishList: Don’t display computer players’ tiles during their turns 
+						//g.fillPolygon(makeScoreHex(c,693,30));
 						color=game.players[find].getHand().getPiece(counter).getPrimaryHexagon().getColor();
 						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c,745,30));
+						//Fixing #4 issue in wishList: Don’t display computer players’ tiles during their turns 
+						//g.fillPolygon(makeScoreHex(c,745,30));
 						c+=65;	
 					}
 					find = -1;
