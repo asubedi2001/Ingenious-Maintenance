@@ -1,4 +1,3 @@
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,13 +7,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class StrategyResults extends JPanel{
-	//takes two ints, the number of wins for each strategy 
+
+
+public class StrategyResults extends JPanel
+{
+	// takes two ints, the number of wins for each strategy
 	private boolean back;
+
 	public StrategyResults(int stratOneWins, int stratTwoWins) {
-//		this.setSize(500,400);
+		// this.setSize(500,400);
 		Back backButton = new Back();
-		this.setLayout(new GridLayout(4,1));
+		this.setLayout(new GridLayout(4, 1));
 		this.setBackground(Color.BLACK);
 		JLabel title = new JLabel("Strategy Analysis");
 		title.setFont(new Font(Font.MONOSPACED, Font.BOLD, 48));
@@ -31,15 +34,17 @@ public class StrategyResults extends JPanel{
 		this.add(strat2);
 		this.add(cont);
 	}
-	public boolean end(){
+
+	public boolean end() {
 		return back;
 	}
-	private class Back implements ActionListener{
+
+	private class Back implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			if(arg0.getActionCommand().equals("Back")){
+			if (arg0.getActionCommand().equals("Back")) {
 				back = true;
 				System.exit(0);
 			}
-		}		
+		}
 	}
 }

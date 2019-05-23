@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-import java.lang.Math;
-public class Hand {
-	//player refills hand and creates 
-	private ArrayList<Piece> pieces=new ArrayList<Piece>(); 
+
+public class Hand
+{
+	//player refills hand and creates
+	private ArrayList<Piece> pieces=new ArrayList<Piece>();
 	GrabBag bag;
 	Hand(GrabBag bag)
 	{
@@ -14,7 +15,7 @@ public class Hand {
 	}
 	public Piece removePiece(int index) {
 		return pieces.remove(index);
-	} 
+	}
 	public void addNewPiece(Piece piece) {
 		pieces.add(piece);
 	}

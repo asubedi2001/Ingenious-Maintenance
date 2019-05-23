@@ -1,13 +1,15 @@
-
-public class ComputerPlayer extends Player{
+public class ComputerPlayer extends Player
+{
 	String compName;
 	Strategy compStrategy;
+
 	public ComputerPlayer(String name, Strategy s, Hand h) {
 		super(name, h, false);
 		compName = name;
 		compStrategy = s;
 	}
-	public void move(){
+
+	public void move() {
 		compStrategy.calculateMove(hand, score);
 		currentPiece = compStrategy.getPiece();
 		hand.removePiece(compStrategy.getPieceIndex());
@@ -15,18 +17,20 @@ public class ComputerPlayer extends Player{
 		pieceY = compStrategy.getYCoordinate();
 		orientation = compStrategy.getOrientation();
 	}
-	public Piece getCurrentPiece(){
+
+	public Piece getCurrentPiece() {
 		return currentPiece;
 	}
-	public int getPieceX(){
+
+	public int getPieceX() {
 		return pieceX;
 	}
-	public int getY(){
+
+	public int getY() {
 		return pieceY;
 	}
-	public int getOrientation(){
+
+	public int getOrientation() {
 		return orientation;
 	}
 }
-
-

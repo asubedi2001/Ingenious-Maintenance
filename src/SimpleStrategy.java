@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SimpleStrategy extends Strategy {
+public class SimpleStrategy extends Strategy
+{
 	private Piece piece;
 	private int xCoord;
 	private int yCoord;
@@ -33,13 +34,13 @@ public class SimpleStrategy extends Strategy {
 		int highestOrientation = 0;
 		int highestPieceIndex = 0;
 		int lowestScore = game.getCurrentPlayer().getScores()[0];
-		
+
 		ArrayList<Integer> hScore = new ArrayList<Integer>();
 		ArrayList<Integer> hX = new ArrayList<Integer>();
 		ArrayList<Integer> hY = new ArrayList<Integer>();
 		ArrayList<Integer> hO = new ArrayList<Integer>();
 		ArrayList<Integer> hPI = new ArrayList<Integer>();
-		
+
 		for (int a = 0; a < 6; a++) {
 			if (game.getCurrentPlayer().getScores()[a] < lowestScore) {
 				lowestScore = game.getCurrentPlayer().getScores()[a];
@@ -51,7 +52,7 @@ public class SimpleStrategy extends Strategy {
 			if (game.getCurrentPlayer().getScores()[a] == lowestScore) {
 				// lowestScore = game.getCurrentPlayer().getScores()[a];
 				lowestColor.add(a + 1);
-				
+
 			}
 		}
 		Hand hand = game.getCurrentPlayer().getHand();
@@ -78,7 +79,7 @@ public class SimpleStrategy extends Strategy {
 									isColor2 = true;
 								}
 							}
-							//makeTempGrid(o, x, y, color1, color2);
+							// makeTempGrid(o, x, y, color1, color2);
 							if ((isColor1 || isColor2) && game.checkLegalMove(o, x, y, color1, color2)) {
 								isMove = true;
 								makeTempGrid(o, x, y, color1, color2);
@@ -87,15 +88,17 @@ public class SimpleStrategy extends Strategy {
 								highestY = y;
 								highestOrientation = o;
 								highestPieceIndex = piece;
-//								if (game.score(x, y, tempGrid) > highestScore || game.score(game.getSecondX(o, x, y),
-//										game.getSecondY(o, x, y), tempGrid) > highestScore) {
-//									highestScore = game.score(x, y, tempGrid);
-//									//hScore.add(game.score(x, y, tempGrid);
-//									highestX = x;
-//									highestY = y;
-//									highestOrientation = o;
-//									highestPieceIndex = piece;
-//								}
+								// if (game.score(x, y, tempGrid) > highestScore
+								// || game.score(game.getSecondX(o, x, y),
+								// game.getSecondY(o, x, y), tempGrid) >
+								// highestScore) {
+								// highestScore = game.score(x, y, tempGrid);
+								// //hScore.add(game.score(x, y, tempGrid);
+								// highestX = x;
+								// highestY = y;
+								// highestOrientation = o;
+								// highestPieceIndex = piece;
+								// }
 
 							}
 						}
@@ -129,10 +132,10 @@ public class SimpleStrategy extends Strategy {
 						}
 					}
 					if (use && game.getCurrentPlayer().getScores()[a] == lowestScore) {
-							// lowestScore =
-							// game.getCurrentPlayer().getScores()[a];
-							newLowestColor.add(a + 1);
-						}
+						// lowestScore =
+						// game.getCurrentPlayer().getScores()[a];
+						newLowestColor.add(a + 1);
+					}
 				}
 				lowestColor = newLowestColor;
 			}
@@ -175,7 +178,8 @@ public class SimpleStrategy extends Strategy {
 									highestPieceIndex = piece;
 								}
 							} else if (isColor2) {
-								if (game.score(game.getSecondX(o, x, y), game.getSecondY(o, x, y),tempGrid) > highestScore) {
+								if (game.score(game.getSecondX(o, x, y), game.getSecondY(o, x, y),
+										tempGrid) > highestScore) {
 									highestScore = game.score(x, y, tempGrid);
 									highestX = x;
 									highestY = y;
@@ -183,34 +187,34 @@ public class SimpleStrategy extends Strategy {
 									highestPieceIndex = piece;
 								}
 							}
-							
 
 						}
 					}
 				}
 			}
 		}
-//		System.out.println("High Score" + highestScore);
+		// System.out.println("High Score" + highestScore);
 		pieceIndex = highestPieceIndex;
 		piece = hand.getPiece(pieceIndex);
 		xCoord = highestX;
 		yCoord = highestY;
 		orientation = highestOrientation;
-		makeTempGrid(highestOrientation,highestX, highestY,hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
+		makeTempGrid(highestOrientation, highestX, highestY, hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),
+				hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
 
-//		for(int y = 0; y < 15; y++){
-////			System.out.println("");
-//			for(int x = 0; x < 30;x++){
-//				if(tempGrid[x][y] == 0){
-//					System.out.print(" ");
-//				}else if(tempGrid[x][y] == -1){
-//					System.out.print(0);
-//				}else{
-//					System.out.print(tempGrid[x][y]);
-//				}
-//			}
-//		}
-		
+		// for(int y = 0; y < 15; y++){
+		//// System.out.println("");
+		// for(int x = 0; x < 30;x++){
+		// if(tempGrid[x][y] == 0){
+		// System.out.print(" ");
+		// }else if(tempGrid[x][y] == -1){
+		// System.out.print(0);
+		// }else{
+		// System.out.print(tempGrid[x][y]);
+		// }
+		// }
+		// }
+
 	}
 
 	public int getPieceIndex() {

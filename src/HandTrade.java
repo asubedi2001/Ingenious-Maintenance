@@ -1,9 +1,10 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
-public class HandTrade extends JFrame implements ActionListener{
+
+public class HandTrade extends JFrame implements ActionListener
+{
 
 	JFrame frame;
 	JPanel pan;
@@ -39,9 +40,9 @@ public class HandTrade extends JFrame implements ActionListener{
 		frame.setContentPane(pan);
 		frame.pack();
 		frame.setVisible(true);
-		
+
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Trade")){
 			isTrade = true;
@@ -51,7 +52,7 @@ public class HandTrade extends JFrame implements ActionListener{
 			isClosed = true;
 			frame.dispose();
 		}
-		
+
 	}
 	public boolean getIsTrade(){
 		return isTrade;
