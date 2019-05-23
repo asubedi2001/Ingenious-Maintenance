@@ -1,0 +1,28 @@
+Installation Instructions – Ingenious
+From source code:
+1. Open Eclipse
+2. Right click on the package explorer and select New->Java Project
+3. Give a name to this new java project and then select “Finish”
+4. Right click on the src folder in the java project and select import
+5. Select file system and then click “Next”
+6. Click browse and select the folder in which the ingenious files are located
+7. Select all of the ingenious files and then click “Finish”
+8. Change the JRE so the java project is compliant
+a. Do this by clicking on the error icon and clicking change JRE
+9. Go to the “Ingenious” class and run the class
+---------------------------------------------------------------------------------------------------------------------
+From runnable JAR file:
+THIS PROJECT REQUIRES JAVA TO RUN: Download java from Oracle: 
+https://java.com/en/download/
+1. Download the runnable JAR file
+2. Double click on the JAR file, and it will automatically run
+3. A menu will open. For all displayed “players”, selecting the labeled bullets will allow them to be set to human control, computer control, or neither, which will exclude them from the game. 
+4. In each player box, the player can be renamed. 
+5. For all players selected to be computers, one of two strategies is available in drop boxes: the first is a greedy strategy; the second is a random strategy. 
+6. Selecting “play” will begin the game with all selected players.
+a. If all players are computers, a strategy analysis mode will be activated. 
+i. Selecting “fast mode” will run the input number of games in the background, returning an end panel with results when complete. 
+ii. Selecting “slow mode” will run the visual interface, showing the piece placement of all the strategies, also returning an end panel when complete. 
+iii. When at the end of the game, an end panel will appear with the number of wins per strategy, and clicking dismiss will end the program. 
+b. If a single player is marked as human, the game will proceed, allowing all human players to place pieces until the game is over. 
+i. When at the end of the game, an end panel will appear with players in order of highest to lowest score with their score, along with their respective scoreboards, and clicking dismiss will end the program. 

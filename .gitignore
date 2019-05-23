@@ -1,2 +1,7 @@
-*.class
 bin
+*.class
+
+.classpath
+.classpath.xml
+.project
+.project.xml
