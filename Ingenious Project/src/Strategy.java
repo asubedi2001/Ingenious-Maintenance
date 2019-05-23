@@ -1,8 +1,11 @@
-public abstract class Strategy {
+public abstract class Strategy
+{
 	Game game;
-	Strategy(Game g){
+
+	Strategy(Game g) {
 		game = g;
 	}
+
 	abstract public void calculateMove(Hand h, int[] score);
 	abstract public Piece getPiece();
 	abstract public int getPieceIndex();
@@ -10,4 +13,3 @@ public abstract class Strategy {
 	abstract public int getYCoordinate();
 	abstract public int getOrientation();
 }
-

@@ -1,16 +1,13 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class GameWindow{
-	JFrame frame; 
+public class GameWindow
+{
+	JFrame frame;
 	StartPanel pan;
 	JPanel sliderPanel;
 	Game game;
@@ -24,7 +21,7 @@ public class GameWindow{
 		sliderPanel = new JPanel();
 		final int FPS_MIN = 0;
 		final int FPS_MAX = 9;
-		final int FPS_INIT = 0; 
+		final int FPS_INIT = 0;
 		JSlider slider = new JSlider(JSlider.HORIZONTAL,
                 FPS_MIN, FPS_MAX, FPS_INIT);
 
@@ -45,12 +42,12 @@ public class GameWindow{
 		container.add(pan);
 		container.add(sliderPanel);
 		frame.setContentPane(container);
-		
-		
+
+
 
 		//frame.add(pan, BorderLayout.CENTER);
-		
-		
+
+
 		frame.pack();
 		frame.setVisible(true);
 		while(!pan.isGameStart() && !pan.isAnalysisStart()){
@@ -74,7 +71,7 @@ public class GameWindow{
 	    public void stateChanged(ChangeEvent e) {
 	    	 JSlider source = (JSlider)e.getSource();
 	    	  if (!source.getValueIsAdjusting()) {
-	    		  lagTime = (int)source.getValue();
+	    		  lagTime = source.getValue();
 	    	  }
 	    }
 	}
