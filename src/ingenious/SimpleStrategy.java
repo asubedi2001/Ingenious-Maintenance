@@ -203,19 +203,18 @@ public class SimpleStrategy extends Strategy
 		makeTempGrid(highestOrientation, highestX, highestY, hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),
 				hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
 
-		// for(int y = 0; y < 15; y++){
-		//// System.out.println("");
-		// for(int x = 0; x < 30;x++){
-		// if(tempGrid[x][y] == 0){
-		// System.out.print(" ");
-		// }else if(tempGrid[x][y] == -1){
-		// System.out.print(0);
-		// }else{
-		// System.out.print(tempGrid[x][y]);
-		// }
-		// }
-		// }
-
+		 for(int y = 0; y < 15; y++){
+			 // System.out.println("");
+			 for(int x = 0; x < 30;x++){
+				 if(tempGrid[x][y] == 0){
+					 System.out.print(" ");
+				 }else if(tempGrid[x][y] == -1){
+					 System.out.print(0);
+				 }else{
+					 System.out.print(tempGrid[x][y]);
+				 }
+			 }
+		 }
 	}
 
 	public int getPieceIndex() {

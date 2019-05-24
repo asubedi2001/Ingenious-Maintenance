@@ -33,6 +33,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+
 import javax.swing.JPanel;
 
 
@@ -350,38 +352,37 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 					hexagon[x][y] = null;
 				} else {
 					if (x % 2 == 0 && y % 2 == 0) {
-						if (x >= 10 && x < 20)
-							hexagon[x][y] = makeHex((int) ((width / 3 + 110) + x * 87 * .6 * .5) - 1, (y * 45 + 80),
-									30);
-						else if (x >= 20)
-							hexagon[x][y] = makeHex((int) ((width / 3 + 110) + x * 87 * .6 * .5) - 2, (y * 45 + 80),
-									30);
-						else
+						
+						if (x >= 10 && x < 20) {
+							hexagon[x][y] = makeHex((int) ((width / 3 + 110) + x * 87 * .6 * .5) - 1, (y * 45 + 80), 30);
+						} else if (x >= 20) {
+							hexagon[x][y] = makeHex((int) ((width / 3 + 110) + x * 87 * .6 * .5) - 2, (y * 45 + 80), 30);
+						} else {
 							hexagon[x][y] = makeHex((int) ((width / 3 + 110) + x * 87 * .6 * .5), (y * 45 + 80), 30);
+						}
+						
 						hexColor[x][y] = -1;
 					} else if (!(x % 2 == 0) && !(y % 2 == 0)) {
-						if (x >= 11 && x < 21)
-							hexagon[x][y] = makeHex((int) (((width / 3 + 110) + x * 87 * .6 * .5)) - 1, (y * 45 + 80),
-									30);
-						else if (x >= 21)
-							hexagon[x][y] = makeHex((int) (((width / 3 + 110) + x * 87 * .6 * .5)) - 2, (y * 45 + 80),
-									30);
-						else
+						
+						if (x >= 11 && x < 21) {
+							hexagon[x][y] = makeHex((int) (((width / 3 + 110) + x * 87 * .6 * .5)) - 1, (y * 45 + 80), 30);
+						} else if (x >= 21) {
+							hexagon[x][y] = makeHex((int) (((width / 3 + 110) + x * 87 * .6 * .5)) - 2, (y * 45 + 80), 30);
+						} else {
 							hexagon[x][y] = makeHex((int) (((width / 3 + 110) + x * 87 * .6 * .5)), (y * 45 + 80), 30);
+						}
+						
 						hexColor[x][y] = -1;
 					}
 				}
 			}
 		}
+		
+		Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
 	}
 
-	private void makePiece(/* Piece myPiece */int x, int y) {
+	private void makePiece(int x, int y) {
 		piece = makeHex(x, y, 30);
-	}
-
-	private Polygon tileChecker(int myX, int myY) {// will check every polygon
-													// for set of coordinates
-		return piece;
 	}
 
 	private void orientPiece(Graphics g) {
@@ -622,26 +623,26 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 			for (int y = 0; y < 15; y++) {
 				if (players == 0) {
 					if (!(hexagon[x][y] == null)) {
-						if (x == 1 || x == 29 || x == 28 || y == 0 || y == 14 || hexagon[x - 2][y] == null
-								|| hexagon[x + 2][y] == null)
-							hexColor[x][y] = 0;
-						else if (y == 1 || y == 13 || x == 3 || x == 27 || x == 26 || hexagon[x - 4][y] == null
-								|| hexagon[x + 4][y] == null)
-							hexColor[x][y] = 0;
-						else
-							hexColor[x][y] = -1;
+						if (x == 1 || x == 29 || x == 28 || y == 0 || y == 14 || hexagon[x - 2][y] == null || hexagon[x + 2][y] == null) {
+							setGrid(x, y, 0);
+						} else if (y == 1 || y == 13 || x == 3 || x == 27 || x == 26 || hexagon[x - 4][y] == null || hexagon[x + 4][y] == null) {
+							setGrid(x, y, 0);
+						} else {
+							setGrid(x, y, -1);
+						}
 					}
 				} else if (players == 1) {
 					if (!(hexagon[x][y] == null)) {
-						if (x == 1 || x == 29 || x == 28 || y == 0 || y == 14 || hexagon[x - 2][y] == null
-								|| hexagon[x + 2][y] == null)
-							hexColor[x][y] = 0;
-						else
-							hexColor[x][y] = -1;
+						if (x == 1 || x == 29 || x == 28 || y == 0 || y == 14 || hexagon[x - 2][y] == null || hexagon[x + 2][y] == null) {
+							setGrid(x, y, 0);
+						} else {
+							setGrid(x, y, -1);
+						}
 					}
 				}
 			}
 		}
+		
 		setGrid(10, 2, 4);
 		setGrid(20, 2, 5);
 		setGrid(25, 7, 6);
@@ -745,31 +746,8 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 }
-/*
- * private void paintScore(Graphics g){ horizontalLines(g); verticalLines(g);
- * //score drawing below g.drawRect(50,650,400,140); int c=85; for(int counter =
- * 0;counter < game.getCurrentPlayer().getHand().getSize(); counter++){ //
- * <--GET HUMAN PLAYERS HAND if(game.getCurrentPlayer().isHuman()){
- * game.getCurrentPlayer().getHand().getPiece(counter); int
- * color=game.getCurrentPlayer().getHand().getPiece(counter).getSecondaryHexagon
- * ().getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,693,30));
- * color=game.getCurrentPlayer().getHand().getPiece(counter).getPrimaryHexagon()
- * .getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,745,30)); c+=65; }else{ //it's a computer player
- * int count = 0; for(int ind = 0; ind < game.players.length; ind++){//need to
- * find the indice of the current computer player if(game.players[ind] ==
- * game.getCurrentPlayer()){ count = ind; } } //if there is a computer player in
- * p1, then find = -1 and for loop doesnt go for(int find = count; find >= 0;
- * find--){//find the most recent human player //NOT WORKING WHEN P4 IS HUMAN,
- * and P1 is computer if(game.players[find].isHuman()){
- * game.players[find].getHand().getPiece(counter); int
- * color=game.players[find].getHand().getPiece(counter).getSecondaryHexagon().
- * getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,693,30));
- * color=game.players[find].getHand().getPiece(counter).getPrimaryHexagon().
- * getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,745,30)); c+=65; find = -1; }else if(find == 0){
- * find = game.players.length; //if its on p1 } } } } }
- */
