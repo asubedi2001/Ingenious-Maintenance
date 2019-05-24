@@ -108,14 +108,6 @@ public class GameWindow{
 			frame.setPreferredSize(new Dimension(1500,800));
 			frame.pack();
 			frame.setVisible(true);
-			while(!((GameOver) frame).cancel()){
-				try {
-					Thread.sleep(0);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			frame.dispose();
 		}else if(a == 1){
 			sliderPanel.setVisible(false);
@@ -182,14 +174,6 @@ public class GameWindow{
 			frame.setContentPane(strats);
 			frame.pack();
 			frame.setVisible(true);
-			while(!strats.end()){
-				try {
-					Thread.sleep(0);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			frame.dispose();
 
 		}
