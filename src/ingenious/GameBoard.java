@@ -231,10 +231,8 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 																										// LOOP
 						int color = game.players[find].getHand().getPiece(counter).getSecondaryHexagon().getColor();
 						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c, 693, 30));
 						color = game.players[find].getHand().getPiece(counter).getPrimaryHexagon().getColor();
 						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c, 745, 30));
 						c += 65;
 					}
 					find = -1;
