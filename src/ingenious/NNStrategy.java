@@ -1,7 +1,7 @@
 package ingenious;
 import java.lang.Math;
 
-public class RandomStrategy extends Strategy
+public class NNStrategy extends Strategy
 {
 	private Piece piece;
 	private int xCoord;
@@ -9,7 +9,7 @@ public class RandomStrategy extends Strategy
 	private int orientation;
 	private int pieceIndex;
 
-	RandomStrategy(Game g) {
+	NNStrategy(Game g) {
 		super(g);
 	}
 
@@ -24,6 +24,7 @@ public class RandomStrategy extends Strategy
 		orientation = ((int) (Math.random() * 6));
 		pieceIndex = (int) (Math.random() * h.getSize());
 		piece = h.getPiece(pieceIndex);
+		System.out.println("d");
 	}
 
 	public int getPieceIndex() {
