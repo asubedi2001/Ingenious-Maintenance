@@ -69,6 +69,7 @@ public class Game{
 					HandTrade handTrade = new HandTrade();
 					while(!handTrade.getIsClosed()){
 						gameBoard.setEnabled(false);
+						Thread.sleep(0);
 					}
 					gameBoard.setEnabled(true);
 					if(handTrade.getIsTrade()){
