@@ -67,6 +67,9 @@ public class Game{
 				if(currentPlayer.checkHand() && currentPlayer.getClass() == HumanPlayer.class){
 					//JFrame fram = new JFrame("Ingenious");
 					HandTrade handTrade = new HandTrade();
+					while(!handTrade.getIsClosed()){
+						gameBoard.setEnabled(false);
+					}
 					gameBoard.setEnabled(true);
 					if(handTrade.getIsTrade()){
 						if(isSecondPlay){
