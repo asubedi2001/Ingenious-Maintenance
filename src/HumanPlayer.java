@@ -11,14 +11,7 @@ public class HumanPlayer extends Player{
 	}
 
 
-	public void move() {
-//		try {
-//			Thread.sleep(0);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	}
+	public void move() {}
 
 	public void rotate(int direction){
 		if(direction == CLOCKWISE){
