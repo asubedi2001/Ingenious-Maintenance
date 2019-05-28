@@ -1,0 +1,16 @@
+Fix problem with final scores – winning score is listed twice under some circumstances (critical)
+
+Code sometimes hangs when a player gets several extra turns in a row (critical)
+
+If player has several colors that are tied for last, allow player to trade if none of those
+colors is included in their tiles (nice to have)
+
+Create more and better computer strategies (nice to have)
+
+Once there are more computer strategies, allow a special option for a computer player that
+chooses randomly between them (nice to have)
+
+According to comments in GameBoard.java, something with the score breaks when P4 is a human
+and P1 is a computer (unknown importance)
+
+Sometimes clicks don’t seem to register properly (soft issue) (nice to have)

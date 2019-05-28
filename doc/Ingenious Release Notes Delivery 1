@@ -1,0 +1,6 @@
+Ingenious Release Notes June 2019 Delivery 1
+
+- Don’t display computer players’ tiles during their turns (nice to have)
+
+- When the player has fewer than six tiles and opts to trade, should replace
+with the same number of tiles, not draw all the way to six (important)
