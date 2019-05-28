@@ -677,7 +677,34 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 		enabled = b;
 	}
 
-	public void mouseClicked(MouseEvent e) {// Currently for debugging
+	public void mouseClicked(MouseEvent e) {
+		X = e.getX();
+		Y = e.getY();
+		repaint();
+	}
+
+	public void mouseMoved(MouseEvent e) {
+		X = e.getX();
+		Y = e.getY();
+		repaint();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	
+	}
+	
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		if (enabled) { // <---- ENABLED?!
 			X = e.getX();
 			Y = e.getY();
@@ -718,56 +745,11 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 		}
 	}
 
-	public void mouseMoved(MouseEvent e) {
+	@Override
+	public void mouseDragged(MouseEvent e) {
 		X = e.getX();
 		Y = e.getY();
 		repaint();
 	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-	}
 }
-/*
- * private void paintScore(Graphics g){ horizontalLines(g); verticalLines(g);
- * //score drawing below g.drawRect(50,650,400,140); int c=85; for(int counter =
- * 0;counter < game.getCurrentPlayer().getHand().getSize(); counter++){ //
- * <--GET HUMAN PLAYERS HAND if(game.getCurrentPlayer().isHuman()){
- * game.getCurrentPlayer().getHand().getPiece(counter); int
- * color=game.getCurrentPlayer().getHand().getPiece(counter).getSecondaryHexagon
- * ().getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,693,30));
- * color=game.getCurrentPlayer().getHand().getPiece(counter).getPrimaryHexagon()
- * .getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,745,30)); c+=65; }else{ //it's a computer player
- * int count = 0; for(int ind = 0; ind < game.players.length; ind++){//need to
- * find the indice of the current computer player if(game.players[ind] ==
- * game.getCurrentPlayer()){ count = ind; } } //if there is a computer player in
- * p1, then find = -1 and for loop doesnt go for(int find = count; find >= 0;
- * find--){//find the most recent human player //NOT WORKING WHEN P4 IS HUMAN,
- * and P1 is computer if(game.players[find].isHuman()){
- * game.players[find].getHand().getPiece(counter); int
- * color=game.players[find].getHand().getPiece(counter).getSecondaryHexagon().
- * getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,693,30));
- * color=game.players[find].getHand().getPiece(counter).getPrimaryHexagon().
- * getColor(); g.setColor(pickColor(color));
- * g.fillPolygon(makeScoreHex(c,745,30)); c+=65; find = -1; }else if(find == 0){
- * find = game.players.length; //if its on p1 } } } } }
- */
+
