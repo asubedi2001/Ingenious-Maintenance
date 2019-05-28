@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public abstract class Player {
-	Hand hand; 
-	String name;  
+	Hand hand;
+	String name;
 	int[] score;
 	boolean isCurrentTurn;
 	boolean isTurnComplete;
@@ -12,7 +12,7 @@ public abstract class Player {
 	int pieceY;
 	int lowestScore;
 	boolean isHuman;
-	public Player(String name1, Hand hand1, boolean isHuman){ 
+	public Player(String name1, Hand hand1, boolean isHuman){
 		hand = hand1;
 		name = name1;
 		score = new int[6];
@@ -29,7 +29,7 @@ public abstract class Player {
 	public abstract void move();
 	public String getName(){
 		return name;
-	} 
+	}
 
 	public boolean checkHand() { // make sure that if the player has a bunch of tied scores for the lower; create second array of all the lowest colors, go through and check for each of those colors in the hand
 		int lowestScore = score[0];
@@ -43,7 +43,7 @@ public abstract class Player {
 				lowestScore = score[count];
 				lowestColor = count;
 			}
-		} 
+		}
 		for (int count = 0; count < 6; count++) {
 			if(score[count] == lowestScore)
 				lowestColors.add(count);
@@ -53,33 +53,46 @@ public abstract class Player {
 			for(int a = 0; a < lowestColors.size(); a++){
 				//check to see if the lowest scoring color (lowestColor) is NOT in the hand/rack
 				//if lowestColor is in the hand, checkHand returns false;
-				if (hand.getPiece(count).getPrimaryHexagon().getColor() - 1 == lowestColors.get(a)) 
+				if (hand.getPiece(count).getPrimaryHexagon().getColor() - 1 == lowestColors.get(a))
 					return false;
-				if (hand.getPiece(count).getSecondaryHexagon().getColor() - 1== lowestColors.get(a)) 
+				if (hand.getPiece(count).getSecondaryHexagon().getColor() - 1== lowestColors.get(a))
 					return false;
 			}
-			
+
 		}
 		return true;
 	}
-	public void tradeHand(){ 
-		for(int a = 0; a < 6; a ++){
+	public void tradeHand(){
+		//Fix issue #7:	When the player has fewer than six tiles and opts to trade, should replace with the same number of tiles, not draw all the way to six.
+		int handPieceSize = 6;
+		if(hand.getPieces().size() < 6 ){
+			handPieceSize = hand.getPieces().size();
+		}
+
+		for(int a = 0; a < handPieceSize; a ++){
 			hand.getBag().addPiece(hand.removePiece(0));
 		}
 		hand.getBag().shuffle();
-		for(int a = 0; a < 6; a ++){
+		for(int a = 0; a < handPieceSize; a ++){
 			hand.addNewPiece(hand.getBag().drawPiece(0));
 		}
 	}
-	public void tradeHandAndMaxOut(){ 
-		for(int a = 0; a < 5; a ++){
+	public void tradeHandAndMaxOut(){
+		//Fix issue #7:	When the player has fewer than six tiles and opts to trade, should replace with the same number of tiles, not draw all the way to six.
+		int handPieceSize = 5;
+		if(hand.getPieces().size() < 5 ){
+			handPieceSize = hand.getPieces().size();
+		}
+
+		for(int a = 0; a < handPieceSize; a ++){
 			hand.getBag().addPiece(hand.removePiece(0));
 		}
 		hand.getBag().shuffle();
-		for(int a = 0; a < 6; a ++){
+		for(int a = 0; a < handPieceSize; a ++){
 			hand.addNewPiece(hand.getBag().drawPiece(0));
 		}
 	}
+
 	public void setLowestScore(int s) {
 		lowestScore = s;
 	}
@@ -137,7 +150,7 @@ public abstract class Player {
 	public void resetDefault(){
 		pieceX = -1;
 		pieceY = -1;
-		
+
 	}
 
 }
