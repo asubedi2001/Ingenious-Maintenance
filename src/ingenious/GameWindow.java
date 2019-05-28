@@ -44,8 +44,6 @@ public class GameWindow
 		container.add(sliderPanel);
 		frame.setContentPane(container);
 
-
-
 		//frame.add(pan, BorderLayout.CENTER);
 
 

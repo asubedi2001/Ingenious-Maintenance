@@ -140,7 +140,6 @@ public class SimpleStrategy extends Strategy
 				}
 				lowestColor = newLowestColor;
 			}
-			System.out.println(isMove);
 		} while (!isMove);
 
 		for (int x = 0; x < 30; x++) {

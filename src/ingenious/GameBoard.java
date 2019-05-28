@@ -649,6 +649,8 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 		setGrid(20, 12, 1);
 		setGrid(10, 12, 2);
 		setGrid(5, 7, 3);
+		
+		Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
 	}
 
 	private Polygon makeHex(int x, int y, int z) { // z is currently radius of
