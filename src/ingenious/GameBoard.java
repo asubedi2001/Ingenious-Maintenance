@@ -59,7 +59,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 	private Game game;
 	private int orientation;
 	private Color[] colors = new Color[] { Color.ORANGE, Color.YELLOW, Color.MAGENTA, Color.RED, Color.GREEN,
-			Color.BLUE };
+			Color.BLUE};
 	private int[] colorcoord = new int[] { 1, 2, 3, 4, 5, 6 };
 	private int score1;
 	private int score2;
