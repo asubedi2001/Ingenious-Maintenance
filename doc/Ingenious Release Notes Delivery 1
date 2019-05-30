@@ -4,3 +4,5 @@ Ingenious Release Notes June 2019 Delivery 1
 
 - When the player has fewer than six tiles and opts to trade, should replace
 with the same number of tiles, not draw all the way to six (important)
+
+- Fixed clicks sometimes not registering properly (soft issue) (nice to have)

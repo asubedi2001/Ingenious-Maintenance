@@ -13,6 +13,4 @@ chooses randomly between them (nice to have)
 According to comments in GameBoard.java, something with the score breaks when P4 is a human
 and P1 is a computer (unknown importance)
 
-Sometimes clicks don’t seem to register properly (soft issue) (nice to have)
-
 Randomly hangs when moving the mouse sometimes (critical)
