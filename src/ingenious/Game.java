@@ -432,7 +432,7 @@ public class Game
 
 	public void initializeStrategies() {
 		gameStrategies = new Strategy[2];
-		gameStrategies[1] = new SimpleStrategy(this);
+		gameStrategies[1] = new GreedyStrategy(this);
 		gameStrategies[0] = new RandomStrategy(this);
 	}
 

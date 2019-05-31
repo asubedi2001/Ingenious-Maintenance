@@ -51,16 +51,12 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 	private int width = 1500;
 	private int length = 800;
 	private int X, Y, stoX, stoY;
-	private boolean isHumanPlayer;
 	private Rectangle2D rotateClockwise = new Rectangle2D.Double(width - 175, length - 175, 175, 175);
 	private Rectangle2D rotateCounterClockwise = new Rectangle2D.Double(width / 3, length - 175, 175, 175);
 	private Rectangle2D returnPiece = new Rectangle2D.Double(width - 175, 0, 175, 175);
 	private Rectangle2D scoreBox = new Rectangle2D.Double(width / 3, 0, 175, 175);
 	private Game game;
 	private int orientation;
-	private Color[] colors = new Color[] { Color.ORANGE, Color.YELLOW, Color.MAGENTA, Color.RED, Color.GREEN,
-			Color.BLUE};
-	private int[] colorcoord = new int[] { 1, 2, 3, 4, 5, 6 };
 	private int score1;
 	private int score2;
 	private int[][] computerGrid;
@@ -91,6 +87,8 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 				computerGrid[x][y] = 0;
 			}
 		}
+		
+		printGameBoardArrays();
 	}
 
 	public void setSlowMode(boolean b) {
@@ -183,6 +181,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 			handPieces[x][1] = makeScoreHex(c, 745, 30);
 			c += 65;
 		}
+		
 	}
 
 	private void paintScore(Graphics g) {
@@ -377,8 +376,6 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 				}
 			}
 		}
-		
-		Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
 	}
 
 	private void makePiece(int x, int y) {
@@ -482,8 +479,9 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 						} catch (Exception e) {
 						}
 					}
-					if (hexColor[x][y] != -1)
+					if (hexColor[x][y] != -1) {
 						g.setColor(pickColor(hexColor[x][y]));
+					}
 					g.fillPolygon(hexagon[x][y]); // draws hex
 
 					g.setColor(Color.BLACK);
@@ -664,14 +662,6 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 		return hex;
 	}
 
-	public void setIsHumanPlayer(boolean human) {
-		isHumanPlayer = human;
-	}
-
-	public void getIsHumanPlayer(boolean human) {
-		isHumanPlayer = human;
-	}
-
 	public void run() {// update mouse x and y location, or something.
 		while (game.isMoveRemaining() || game.isWinner()) {
 			repaint();
@@ -747,6 +737,20 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
+	}
+	
+	public void printGameBoardArrays() {
+		
+		System.out.println("Hexagon Grid");
+		Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
+		System.out.println("HandPieces Grid");
+		Arrays.stream(handPieces).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
+		System.out.println("HexColor Grid");
+		Arrays.stream(hexColor).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		System.out.println("gameBoardTemp Grid");
+		Arrays.stream(gameBoardTempGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		System.out.println("Computer Grid");
+		Arrays.stream(computerGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
 	}
 	
 	public static void main(String[] args) {

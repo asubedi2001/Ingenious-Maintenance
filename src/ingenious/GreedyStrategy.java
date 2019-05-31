@@ -2,7 +2,7 @@ package ingenious;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SimpleStrategy extends Strategy
+public class GreedyStrategy extends Strategy
 {
 	private Piece piece;
 	private int xCoord;
@@ -11,7 +11,7 @@ public class SimpleStrategy extends Strategy
 	private int pieceIndex;
 	private int[][] tempGrid;
 
-	SimpleStrategy(Game g) {
+	GreedyStrategy(Game g) {
 		super(g);
 	}
 
