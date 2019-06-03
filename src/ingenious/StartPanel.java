@@ -125,7 +125,7 @@ public class StartPanel extends JPanel
 			names[i] = new JTextField("Player " + (i + 1));
 			names[i].setPreferredSize(new Dimension(10, 10));
 			if (i >= 2) {
-				names[i].setEnabled(false);
+				names[i].disable();
 			}
 			this.add(names[i]);
 		}
@@ -142,7 +142,7 @@ public class StartPanel extends JPanel
 			strategies[i].setSelectedIndex(1);
 			if (i != 1) {
 				strategies[i].setForeground(Color.GRAY);
-				strategies[i].setEnabled(false);
+				strategies[i].disable();
 			}
 			this.add(strategies[i]);
 		}
@@ -232,10 +232,10 @@ public class StartPanel extends JPanel
 			String clicked = arg0.getActionCommand();
 			int numPlayers = numPlayers();
 			if (numPlayers < 2) {// if enough players
-				play.setEnabled(false);
+				play.disable();
 				play.setForeground(Color.GRAY);
 			} else if (numPlayers >= 2) {
-				play.setEnabled(false);
+				play.enable();
 				play.setForeground(Color.BLACK);
 			}
 			if (clicked.equals("Cancel")) {
@@ -258,18 +258,18 @@ public class StartPanel extends JPanel
 			gameWindow.showSlider(hide);
 			for (int col = 0; col < 4; col++) {
 				if (topButtons[0][col].isSelected()) { // if NONE
-					names[col].setEnabled(false); // no NAME
-					strategies[col].setEnabled(false); // no STRATEGY
+					names[col].disable(); // no NAME
+					strategies[col].disable(); // no STRATEGY
 					names[col].setForeground(Color.GRAY);
 					strategies[col].setForeground(Color.GRAY);
 				} else if (topButtons[1][col].isSelected()) {// if HUMAN
-					strategies[col].setEnabled(false); // no STRATEGY
+					strategies[col].disable(); // no STRATEGY
 					strategies[col].setForeground(Color.GRAY);
-					names[col].setEnabled(true); // can TYPE NAME, no STRATEGY
+					names[col].enable(); // can TYPE NAME, no STRATEGY
 					names[col].setForeground(Color.BLACK);
 				} else {// if COMPUTER
-					names[col].setEnabled(true); // can TYPE NAME
-					strategies[col].setEnabled(true); // can HAVE STRATEGY
+					names[col].enable(); // can TYPE NAME
+					strategies[col].enable(); // can HAVE STRATEGY
 					names[col].setForeground(Color.BLACK);
 					strategies[col].setForeground(Color.BLACK);
 				}

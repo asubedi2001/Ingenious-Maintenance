@@ -87,8 +87,6 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 				computerGrid[x][y] = 0;
 			}
 		}
-		
-		printGameBoardArrays();
 	}
 
 	public void setSlowMode(boolean b) {
@@ -741,16 +739,27 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 	
 	public void printGameBoardArrays() {
 		
-		System.out.println("Hexagon Grid");
-		Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
-		System.out.println("HandPieces Grid");
-		Arrays.stream(handPieces).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
-		System.out.println("HexColor Grid");
-		Arrays.stream(hexColor).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
-		System.out.println("gameBoardTemp Grid");
-		Arrays.stream(gameBoardTempGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
-		System.out.println("Computer Grid");
-		Arrays.stream(computerGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		if (hexagon != null) {
+			System.out.println("Hexagon Grid");
+			Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
+		}
+		
+		if (handPieces != null) {
+			System.out.println("HandPieces Grid");
+			Arrays.stream(handPieces).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
+		}
+		if (hexColor != null) {
+			System.out.println("HexColor Grid");
+			Arrays.stream(hexColor).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+		if (gameBoardTempGrid != null) {
+			System.out.println("gameBoardTemp Grid");
+			Arrays.stream(gameBoardTempGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+		if (computerGrid != null) {
+			System.out.println("Computer Grid");
+			Arrays.stream(computerGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
 	}
 	
 	public static void main(String[] args) {

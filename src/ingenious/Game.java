@@ -94,6 +94,8 @@ public class Game
 					// currentPlayer.resetDefault();
 					currentPlayer.move();
 					gameBoard.repaint();
+					
+					gameBoard.printGameBoardArrays();
 				} while (!checkLegalMove());
 				gameBoard.computerGrid(emptyGrid);
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
