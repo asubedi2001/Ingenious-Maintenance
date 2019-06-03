@@ -140,7 +140,7 @@ public class GreedyStrategy extends Strategy
 				}
 				lowestColor = newLowestColor;
 			}
-			System.out.println(isMove);
+	//		System.out.println(isMove);
 		} while (!isMove);
 
 		for (int x = 0; x < 30; x++) {
