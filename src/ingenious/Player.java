@@ -1,4 +1,3 @@
-package ingenious;
 import java.util.ArrayList;
 
 public abstract class Player {
