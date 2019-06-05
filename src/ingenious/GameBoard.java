@@ -19,6 +19,8 @@
  */
 //getScore() pass x coordinate
 //primary hexagon
+
+package ingenious;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -82,7 +84,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 				getGame().deselect();
 				getGame().getCurrentPlayer().setOrientation(0);
 				getGame().getCurrentPlayer().resetDefault();
-				repaint();	
+				repaint();
 			}
 		};
 
@@ -90,7 +92,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			public void actionPerformed(ActionEvent e) {
 				rotate(1);
 				getGame().getCurrentPlayer().resetDefault();
-				repaint();	   
+				repaint();
 			}
 		};
 
@@ -98,7 +100,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			public void actionPerformed(ActionEvent e) {
 				rotate(-1);
 				getGame().getCurrentPlayer().resetDefault();
-				repaint();	    
+				repaint();
 			}
 		};
 
@@ -136,7 +138,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	}
 	//gmae.getCUrrentPiece.getPrimaryHexagon.getCOlor();
 	public void paintComponent(Graphics g){
-		super.paintComponent(g);	
+		super.paintComponent(g);
 		try{
 			Graphics2D g2d = (Graphics2D)g;
 			g.setColor(Color.BLACK);
@@ -164,7 +166,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			}else{
 				g.setColor(Color.BLACK);
 				g2d.drawString(Integer.toString(score1), width/3 +80, 54); //getScore for the string or whatever
-				g2d.drawString(Integer.toString(score2), width/3 +80, 129); 	 
+				g2d.drawString(Integer.toString(score2), width/3 +80, 129);
 				g.setColor(pickColor(game.getCurrentPlayer().getCurrentPiece().getSecondaryHexagon().getColor()));
 				g.drawPolygon(makeHex(width/3 + 40, 125,30));
 				g.fillPolygon(makeHex(width/3 + 40, 125,30));
@@ -174,7 +176,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		}catch(Exception e){}
 		paintBoard(g);
 		//horizontalLines(g);
-		//verticalLines(g);    
+		//verticalLines(g);
 		//paintHand(g);
 	}
 	public int[][] getHexColor(){
@@ -198,7 +200,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	}
 	private void paintScore(Graphics g){
 		horizontalLines(g);
-		verticalLines(g);    
+		verticalLines(g);
 		//score drawing below
 		g.drawRect(50,650,400,140);
 		int c=85;
@@ -226,13 +228,13 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 					for(int counter = 0; counter < game.players[find].getHand().getSize(); counter++){//DOES NOT GET STUCK IN THIS FOR LOOP
 						int color=game.players[find].getHand().getPiece(counter).getSecondaryHexagon().getColor();
 						g.setColor(pickColor(color));
-						//Fixing #4 issue in wishList: Don’t display computer players’ tiles during their turns 
+						//Fixing #4 issue in wishList: Donï¿½t display computer playersï¿½ tiles during their turns
 						//g.fillPolygon(makeScoreHex(c,693,30));
 						color=game.players[find].getHand().getPiece(counter).getPrimaryHexagon().getColor();
 						g.setColor(pickColor(color));
-						//Fixing #4 issue in wishList: Don’t display computer players’ tiles during their turns 
+						//Fixing #4 issue in wishList: Donï¿½t display computer playersï¿½ tiles during their turns
 						//g.fillPolygon(makeScoreHex(c,745,30));
-						c+=65;	
+						c+=65;
 					}
 					find = -1;
 				}else if(find == 0){
@@ -253,13 +255,13 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	}
 
 	private void verticalLines(Graphics g){
-		int change=50;   	 
+		int change=50;
 		int yInit = 80;
 		int yInit2=93;
 		for(int boxes = 0; boxes < game.getPlayers().length; boxes++){
-			for (int counter2=0;counter2<19;counter2++){           	 
+			for (int counter2=0;counter2<19;counter2++){
 				g.drawLine(change,yInit,change,yInit + 105);
-				g.drawString(""+counter2 ,change +5,yInit2);       	 
+				g.drawString(""+counter2 ,change +5,yInit2);
 				change+=23;
 			}
 			yInit2+=140;
@@ -315,7 +317,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			g.drawLine(50,change+75,483,change+75);
 			g.drawLine(50,change+90,483,change+90);
 			change+=140;
-		}    
+		}
 	}
 
 	private Polygon makeScoreHex(int x, int y, int z){
@@ -435,14 +437,14 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		for(int x = 1; x<30; x++){
 			for(int y = 0; y<15;y++){
 				if(!(hexagon[x][y] == null)){
-					if(x == 1 || x == 29 || x==28 || y == 0 ||  y == 14 || hexagon[x-2][y] == null || hexagon[x+2][y] == null)            	 
+					if(x == 1 || x == 29 || x==28 || y == 0 ||  y == 14 || hexagon[x-2][y] == null || hexagon[x+2][y] == null)
 						g.setColor(Color.GRAY);
 					else if(y==1 || y == 13 || x == 3 || x == 27 || x== 26 || hexagon[x-4][y] == null || hexagon[x+4][y] == null)
 						g.setColor(Color.LIGHT_GRAY);
-					if(hexagon[x][y].contains(X,Y) ){//&&checkLegalMove()                           	 
+					if(hexagon[x][y].contains(X,Y) ){//&&checkLegalMove()
 						onSpace = true;
 						stoX = x;
-						stoY = y;  
+						stoY = y;
 						try{
 							if(game.checkLegalMove(orientation, x, y)){
 								makeGameBoardTempGrid(x,y, orientation);
@@ -450,7 +452,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 								score2 = game.score(game.getSecondX(orientation, x, y), game.getSecondY(orientation, x, y) , gameBoardTempGrid);
 							}
 						}catch(Exception e){}
-					}if(computerGrid[x][y]!=0 ){//for computer score display                       	 
+					}if(computerGrid[x][y]!=0 ){//for computer score display
 						//onSpace = true;
 						try{
 							if(game.checkLegalMove(orientation, x, y)){
@@ -478,14 +480,14 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 					//                		g.drawPolygon(hexagon[x][y]);
 					//                	}else{
 					//                		g.setColor(Color.BLACK);
-					//                    	g.drawPolygon(hexagon[x][y]); 
+					//                    	g.drawPolygon(hexagon[x][y]);
 					//                	}
 					((Graphics2D)g).setStroke(new BasicStroke(1));
 					g.setColor(Color.WHITE);
-				}                   	 
+				}
 			}
 
-		}    
+		}
 		for(int x = 1; x<30; x++){
 			for(int y = 0; y<15;y++){
 				if(!(hexagon[x][y] == null)){
@@ -504,14 +506,14 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		if(strategy){
 			g.setColor(Color.RED);
 			g.drawPolygon(hexagon[9/*Game.getX()*/][9/*Game.getY()*/]);
-		}    
+		}
 		g.setColor(Color.BLACK);
 		orientPiece(g);
 
 	}
 	public void shadeCyan(Graphics g, boolean onSpace){
 		g.setColor(Color.CYAN);
-		if(onSpace && game.getCurrentPlayer().getCurrentPiece() != null && game.getCurrentPlayer().getClass() == HumanPlayer.class){    
+		if(onSpace && game.getCurrentPlayer().getCurrentPiece() != null && game.getCurrentPlayer().getClass() == HumanPlayer.class){
 			try{
 				if(orientation == 0){
 					if(hexColor[stoX-1][stoY-1] == -1 && hexColor[stoX][stoY] == -1){
@@ -583,16 +585,16 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			for(int y = 0; y<15;y++){
 				if(players == 0 ){
 					if(!(hexagon[x][y] == null)){
-						if(x == 1 || x == 29 || x==28 || y == 0 ||  y == 14 || hexagon[x-2][y] == null || hexagon[x+2][y] == null)    
-							hexColor[x][y] = 0;    	 
+						if(x == 1 || x == 29 || x==28 || y == 0 ||  y == 14 || hexagon[x-2][y] == null || hexagon[x+2][y] == null)
+							hexColor[x][y] = 0;
 						else if(y==1 || y == 13 || x == 3 || x == 27 || x== 26 || hexagon[x-4][y] == null || hexagon[x+4][y] == null)
-							hexColor[x][y] = 0;    
+							hexColor[x][y] = 0;
 						else
 							hexColor[x][y] = -1;
 					}
 				}else if(players == 1){
 					if(!(hexagon[x][y] == null)){
-						if(x == 1 || x == 29 || x==28 || y == 0 ||  y == 14 || hexagon[x-2][y] == null || hexagon[x+2][y] == null)    
+						if(x == 1 || x == 29 || x==28 || y == 0 ||  y == 14 || hexagon[x-2][y] == null || hexagon[x+2][y] == null)
 							hexColor[x][y] = 0;
 						else
 							hexColor[x][y] = -1;
@@ -624,7 +626,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	}
 	public void run() {//update mouse x and y location, or something.
 		while(game.isMoveRemaining() || game.isWinner()){
-			repaint();    
+			repaint();
 		}
 	}
 	public void setEnabled(boolean b){
@@ -648,7 +650,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 								if(game.getCurrentPlayer().getCurrentPiece() == null){
 									game.select(x);
 								}
-							}    
+							}
 						}
 					}catch(Exception exception){}
 				}
@@ -704,7 +706,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 }
 /*	private void paintScore(Graphics g){
 		horizontalLines(g);
-		verticalLines(g);    
+		verticalLines(g);
 		//score drawing below
 		g.drawRect(50,650,400,140);
 		int c=85;
