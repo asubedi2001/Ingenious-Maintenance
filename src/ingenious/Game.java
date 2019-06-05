@@ -44,6 +44,10 @@ public class Game
 	}
 
 	public void play(int lagTime) throws InterruptedException {
+
+		lagTime = 0;
+		sleepTimer = 0;
+
 		int[] startScores = new int[] { 0, 0, 0, 0, 0, 0 };
 		boolean isSecondPlay = false;
 		PlayAgain playAgain = null;
@@ -69,7 +73,6 @@ public class Game
 					HandTrade handTrade = new HandTrade();
 					while (!handTrade.getIsClosed()) {
 						gameBoard.setEnabled(false);
-						Thread.sleep(0);
 					}
 					gameBoard.setEnabled(true);
 					if (handTrade.getIsTrade()) {
@@ -82,7 +85,7 @@ public class Game
 				}
 				isSecondPlay = false;
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
-					Thread.sleep(lagTime * 1000);
+					//Thread.sleep(lagTime * 1000);
 				}
 				do {
 					if (currentPlayer.getClass() == ComputerPlayer.class) {
@@ -99,7 +102,7 @@ public class Game
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
 					gameBoard.computerGrid(twoHexGrid(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 							currentPlayer.getPieceY()));
-					Thread.sleep(sleepTimer);
+					//Thread.sleep(sleepTimer);
 				}
 				currentPlayer.updateScore(getTurnScore(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 						currentPlayer.getPieceY()));
@@ -431,10 +434,9 @@ public class Game
 	}
 
 	public void initializeStrategies() {
-		gameStrategies = new Strategy[3];
-		gameStrategies[2] = new NNStrategy(this);
-		gameStrategies[1] = new GreedyStrategy(this);
+		gameStrategies = new Strategy[2];
 		gameStrategies[0] = new RandomStrategy(this);
+		gameStrategies[1] = new GreedyStrategy(this);
 	}
 
 	public void rotate(int direction) {
