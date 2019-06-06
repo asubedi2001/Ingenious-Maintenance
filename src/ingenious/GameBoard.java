@@ -550,22 +550,25 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 						g.drawPolygon(hexagon[stoX - 1][stoY - 1]);
 
 					}
+					//maybe
 				} else if (orientation == 1) {
-					if (stoX<15 && stoY>0 && hexColor[stoX + 1][stoY - 1] == -1 && hexColor[stoX][stoY] == -1) {
+					if (stoX<14 && stoY>0 && hexColor[stoX + 1][stoY - 1] == -1 && hexColor[stoX][stoY] == -1) {
 						g.fillPolygon(hexagon[stoX][stoY]);
 						g.drawPolygon(hexagon[stoX + 1][stoY - 1]);
 						g.fillPolygon(hexagon[stoX + 1][stoY - 1]);
 						g.drawPolygon(hexagon[stoX + 1][stoY - 1]);
 					}
+					//maybe
 				} else if (orientation == 2) {
-					if (stoX<14 && stoY<30 && hexColor[stoX + 2][stoY] == -1 && hexColor[stoX][stoY] == -1) {
+					if (stoX<13 && stoY<30 && hexColor[stoX + 2][stoY] == -1 && hexColor[stoX][stoY] == -1) {
 						g.fillPolygon(hexagon[stoX][stoY]);
 						g.drawPolygon(hexagon[stoX][stoY]);
 						g.fillPolygon(hexagon[stoX + 2][stoY]);
 						g.drawPolygon(hexagon[stoX + 2][stoY]);
 					}
+					//maybe
 				} else if (orientation == 3) {
-					if (stoX<15 && stoY<30 && hexColor[stoX + 1][stoY + 1] == -1 && hexColor[stoX][stoY] == -1) {
+					if (stoX<14 && stoY<29 && hexColor[stoX + 1][stoY + 1] == -1 && hexColor[stoX][stoY] == -1) {
 						g.fillPolygon(hexagon[stoX][stoY]);
 						g.drawPolygon(hexagon[stoX][stoY]);
 						g.fillPolygon(hexagon[stoX + 1][stoY + 1]);
@@ -580,7 +583,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 						g.drawPolygon(hexagon[stoX - 1][stoY + 1]);
 					}
 				} else if (orientation == 5) {
-					if (stoX>1 && stoY>-1 && stoY<30 && hexColor[stoX - 2][stoY] == -1 && hexColor[stoX][stoY] == -1) {
+					if (stoX>1 && stoY<30 && hexColor[stoX - 2][stoY] == -1 && hexColor[stoX][stoY] == -1) {
 						g.fillPolygon(hexagon[stoX][stoY]);
 						g.drawPolygon(hexagon[stoX][stoY]);
 						g.fillPolygon(hexagon[stoX - 2][stoY]);

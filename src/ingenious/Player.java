@@ -11,7 +11,7 @@ public abstract class Player {
 	Piece currentPiece;
 	int pieceX;
 	int pieceY;
-	int lowestScore;
+	int lowestScore;    
 	boolean isHuman;
 	public Player(String name1, Hand hand1, boolean isHuman){
 		hand = hand1;
