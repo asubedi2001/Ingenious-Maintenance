@@ -67,6 +67,9 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	private static Action rotateClockwiseAction;
 	private static Action rotateCounterClockwiseAction;
 
+	// keyboard inputs caused a lot of new bugs, so this is disabled by default
+	private final boolean keyboard_inputs = false;
+
 	public GameBoard(Game game){ //JFrame made in tester class
 		this.game = game;
 		setBackground(Color.WHITE);
@@ -75,11 +78,14 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
+		if (keyboard_inputs)
+		{
+
 		//Add keyboard shortcuts to rotate and return piece start
 		//Using key Bindings, first to get current window focus
 		int mapName = JComponent.WHEN_IN_FOCUSED_WINDOW;
 
-		returnAction  = new AbstractAction() {
+		returnAction = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				getGame().deselect();
 				getGame().getCurrentPlayer().setOrientation(0);
@@ -111,6 +117,8 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		this.getInputMap(mapName).put( KeyStroke.getKeyStroke( "F3" ), "doRotateCounterClockwiseAction" );
 		this.getActionMap().put( "doRotateCounterClockwiseAction", rotateCounterClockwiseAction );
 		//Add keyboard shortcuts to rotate and return piece end
+
+		}
 
 		initializeGrid();
 		makeBoard(game.numPlayers() - 2);
