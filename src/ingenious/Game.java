@@ -90,10 +90,10 @@ public class Game
 							currentPlayer.getHand().addNewPiece(currentPlayer.getCurrentPiece());
 							currentPlayer.removeCurrentPiece();
 						}
+						
+						currentPlayer.move();
 					}
-					// currentPlayer.resetDefault();
-					currentPlayer.move();
-					gameBoard.repaint();
+//					gameBoard.repaint();
 					
 					gameBoard.printGameBoardArrays();
 				} while (!checkLegalMove());
@@ -122,6 +122,7 @@ public class Game
 				}
 				if (playAgain != null) {
 					playAgain.dispose();
+					playAgain = null;
 				}
 				currentPlayer.setOrientation(0);
 				if (!isMoveRemaining() || isWinner()) {

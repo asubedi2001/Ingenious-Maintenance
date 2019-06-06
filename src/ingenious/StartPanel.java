@@ -231,6 +231,7 @@ public class StartPanel extends JPanel
 		public void actionPerformed(ActionEvent arg0) {
 			String clicked = arg0.getActionCommand();
 			int numPlayers = numPlayers();
+			
 			if (numPlayers < 2) {// if enough players
 				play.disable();
 				play.setForeground(Color.GRAY);
@@ -238,6 +239,7 @@ public class StartPanel extends JPanel
 				play.enable();
 				play.setForeground(Color.BLACK);
 			}
+			
 			if (clicked.equals("Cancel")) {
 				isCancelled = true;
 			} else if (clicked.equals("Play")) {
