@@ -456,7 +456,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 						stoX = x;
 						stoY = y;
 						try {
-							if (game.checkLegalMove(orientation, x, y)) {
+							if (game.checkLegalMove(x, y)) {
 								makeGameBoardTempGrid(x, y, orientation);
 								score1 = game.score(x, y, gameBoardTempGrid);
 								score2 = game.score(game.getSecondX(orientation, x, y),
@@ -468,7 +468,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 					if (computerGrid[x][y] != 0) {// for computer score display
 						// onSpace = true;
 						try {
-							if (game.checkLegalMove(orientation, x, y)) {
+							if (game.checkLegalMove(x, y)) {
 								makeGameBoardTempGrid(x, y, orientation);
 								score1 = game.score(x, y, gameBoardTempGrid);
 								score2 = game.score(game.getSecondX(orientation, x, y),

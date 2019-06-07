@@ -81,9 +81,9 @@ public class Game
 					}
 				}
 				isSecondPlay = false;
-				if (currentPlayer.getClass() == ComputerPlayer.class) {
-					Thread.sleep(lagTime * 1000);
-				}
+//				if (currentPlayer.getClass() == ComputerPlayer.class) {
+//					Thread.sleep(lagTime * 1000);
+//				}
 				do {
 					if (currentPlayer.getClass() == ComputerPlayer.class) {
 						if (currentPlayer.getCurrentPiece() != null) {
@@ -101,7 +101,7 @@ public class Game
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
 					gameBoard.computerGrid(twoHexGrid(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 							currentPlayer.getPieceY()));
-					Thread.sleep(sleepTimer);
+					//Thread.sleep(sleepTimer);
 				}
 				currentPlayer.updateScore(getTurnScore(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 						currentPlayer.getPieceY()));
@@ -579,112 +579,20 @@ public class Game
 														// the mouse
 			int CoordX = currentPlayer.getPieceX();
 			int CoordY = currentPlayer.getPieceY();
-			// try{
 			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
 			int color2 = currentPlayer.getCurrentPiece().getSecondaryHexagon().getColor();
-			if (CoordX > -1 && CoordY > -1) {
-				if (currentPlayer.getOrientation() == 0) {
-					if (CoordX > 0 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 1) {
-					if (CoordX < 29 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 2) {
-					if (CoordX < 28) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 3) {
-					if (CoordX < 29 && CoordY < 14)
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
-								return true;
-						}
-
-				} else if (currentPlayer.getOrientation() == 4) {
-					if (CoordX > 0 && CoordY < 14) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 5) {
-					if (CoordX > 1) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
-								return true;
-						}
-					}
-				}
-			}
-			// }catch(Exception ex){
-			// return true;
-			// }
-		} // else{}
+			
+			return checkLegalMove(currentPlayer.getOrientation(), CoordX, CoordY, color1, color2);
+		}
 		return false;
 	}
 
-	public boolean checkLegalMove(int o, int x, int y) {
+	public boolean checkLegalMove(int x, int y) {
 		if (currentPlayer.getCurrentPiece() != null) {
-			int CoordX = x;
-			int CoordY = y;
 			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
 			int color2 = currentPlayer.getCurrentPiece().getSecondaryHexagon().getColor();
-			if (CoordX > -1 && CoordY > -1) {
-				if (currentPlayer.getOrientation() == 0) {
-					if (CoordX > 0 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 1) {
-					if (CoordX < 29 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 2) {
-					if (CoordX < 28) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 3) {
-					if (CoordX < 29 && CoordY < 14)
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
-								return true;
-						}
-
-				} else if (currentPlayer.getOrientation() == 4) {
-					if (CoordX > 0 && CoordY < 14) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 5) {
-					if (CoordX > 1) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
-								return true;
-						}
-					}
-				}
-			}
+			
+			return checkLegalMove(currentPlayer.getOrientation(), x, y, color1, color2);
 		}
 		return false;
 	}
