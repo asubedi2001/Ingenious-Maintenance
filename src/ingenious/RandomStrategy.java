@@ -15,9 +15,7 @@ public class RandomStrategy extends Strategy
 
 	public void calculateMove(Hand h, int[] score) {
 		boolean legalMove = false;
-		if (game.getCurrentPlayer().checkHand() && game.getCurrentPlayer().getHand().getSize() == 6) {
-			game.getCurrentPlayer().tradeHand();
-		}
+		game.getCurrentPlayer().tradeHand();
 
 		xCoord = (int) (Math.random() * 30);
 		yCoord = (int) (Math.random() * 15);

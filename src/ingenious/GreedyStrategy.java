@@ -57,9 +57,7 @@ public class GreedyStrategy extends Strategy
 			}
 		}
 		Hand hand = game.getCurrentPlayer().getHand();
-		if (game.getCurrentPlayer().checkHand() && game.getCurrentPlayer().getHand().getSize() == 6) {
-			game.getCurrentPlayer().tradeHand();
-		}
+		game.getCurrentPlayer().tradeHand();
 		boolean isColor1 = false, isColor2 = false;
 		boolean isMove = false;
 		do {
