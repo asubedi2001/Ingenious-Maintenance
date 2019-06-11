@@ -41,6 +41,8 @@ public class Game
 				emptyGrid[x][y] = 0;
 			}
 		}
+
+		currentPlayer = players[0];
 	}
 
 	public void play(int lagTime) throws InterruptedException {
