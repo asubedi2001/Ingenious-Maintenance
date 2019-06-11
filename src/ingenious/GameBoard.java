@@ -441,7 +441,9 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	private void paintBoard(Graphics g){ //paints the board
 		boolean onSpace = false;
 		boolean strategy = false; //for testing purposes
-		orientation = game.getCurrentPlayer().getOrientation();
+		orientation = game.
+				getCurrentPlayer().
+				getOrientation();
 		for(int x = 1; x<30; x++){
 			for(int y = 0; y<15;y++){
 				if(!(hexagon[x][y] == null)){
