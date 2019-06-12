@@ -20,6 +20,7 @@
 //getScore() pass x coordinate
 //primary hexagon
 
+package ingenious;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
