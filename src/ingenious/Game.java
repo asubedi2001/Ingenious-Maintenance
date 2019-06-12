@@ -17,7 +17,9 @@ public class Game
 	Player[] p;
 	int[] sortedScores;
 
+	static int games = 0;
 	Game(String[] names, int[] playerTypes, int[] strategies) {
+		System.out.println(games++);
 		grabBag = new GrabBag();
 		isGameOver = false;
 		players = new Player[names.length];
@@ -440,7 +442,7 @@ public class Game
 	}
 
 	public void initializeStrategies() {
-		gameStrategies = new Strategy[2];
+		gameStrategies = new Strategy[3];
 		gameStrategies[0] = new RandomStrategy(this);
 		gameStrategies[1] = new GreedyStrategy(this);
 		gameStrategies[2] = new VeryGreedyStrategy(this);

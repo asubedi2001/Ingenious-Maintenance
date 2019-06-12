@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -310,6 +311,7 @@ public class StartPanel extends JPanel
 		cont.addActionListener(stratListener);
 		error = new JLabel("Input error: please input an integer");
 		error.setVisible(false);
+		
 		this.add(title);
 		this.add(new JLabel(""));
 		this.add(prompt);
