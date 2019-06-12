@@ -443,6 +443,7 @@ public class Game
 		gameStrategies = new Strategy[2];
 		gameStrategies[0] = new RandomStrategy(this);
 		gameStrategies[1] = new GreedyStrategy(this);
+		gameStrategies[2] = new VeryGreedyStrategy(this);
 	}
 
 	public void rotate(int direction) {
