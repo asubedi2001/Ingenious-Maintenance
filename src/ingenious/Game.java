@@ -1,4 +1,4 @@
-
+package ingenious;
 import java.util.Arrays;
 
 public class Game
@@ -363,7 +363,7 @@ public class Game
 			p[0] = players[highest];
 			int secondHighest = 0;
 			for (int i = 0; i < 4; i++) {
-				//Fix problem with final scores – winning score is listed twice under player 1 is a winner
+				//Fix problem with final scores Â– winning score is listed twice under player 1 is a winner
 				if(secondHighest == highest && secondHighest < 3)
 					secondHighest = i+1;
 				
