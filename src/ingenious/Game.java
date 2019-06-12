@@ -1,4 +1,4 @@
-package ingenious;
+
 import java.util.Arrays;
 
 public class Game
@@ -69,14 +69,12 @@ public class Game
 					startScores[i] = currentPlayer.getScores()[i];
 				}
 				if (currentPlayer.checkHand() && currentPlayer.getClass() == HumanPlayer.class) {
-
+					// JFrame fram = new JFrame("Ingenious");
 					HandTrade handTrade = new HandTrade();
 					while (!handTrade.getIsClosed()) {
 						gameBoard.setEnabled(false);
 					}
-
 					gameBoard.setEnabled(true);
-
 					if (handTrade.getIsTrade()) {
 						if (isSecondPlay) {
 							currentPlayer.tradeHandAndMaxOut();
@@ -84,12 +82,10 @@ public class Game
 							currentPlayer.tradeHand();
 						}
 					}
-
-					gameBoard.setEnabled(true);
 				}
 				isSecondPlay = false;
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
-					Thread.sleep(lagTime * 1000);
+					//Thread.sleep(lagTime * 1000);
 				}
 				do {
 					if (currentPlayer.getClass() == ComputerPlayer.class) {
@@ -106,7 +102,7 @@ public class Game
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
 					gameBoard.computerGrid(twoHexGrid(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 							currentPlayer.getPieceY()));
-					Thread.sleep(sleepTimer);
+					//Thread.sleep(sleepTimer);
 				}
 				currentPlayer.updateScore(getTurnScore(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 						currentPlayer.getPieceY()));
@@ -367,6 +363,10 @@ public class Game
 			p[0] = players[highest];
 			int secondHighest = 0;
 			for (int i = 0; i < 4; i++) {
+				//Fix problem with final scores – winning score is listed twice under player 1 is a winner
+				if(secondHighest == highest && secondHighest < 3)
+					secondHighest = i+1;
+				
 				if (score[i][0] > score[secondHighest][0] && i != highest) {
 					secondHighest = i;
 				}
@@ -578,19 +578,66 @@ public class Game
 	}
 
 	// UPDATED CHECKLEGALMOVE
-	// called in play (with lagtime)
 	public boolean checkLegalMove() {
 		if (currentPlayer.getCurrentPiece() != null) { // if there is a piece on
 														// the mouse
 			int CoordX = currentPlayer.getPieceX();
 			int CoordY = currentPlayer.getPieceY();
-			return checkLegalMove(currentPlayer.getOrientation(), CoordX, CoordY);
-		}
+			// try{
+			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
+			int color2 = currentPlayer.getCurrentPiece().getSecondaryHexagon().getColor();
+			if (CoordX > -1 && CoordY > -1) {
+				if (currentPlayer.getOrientation() == 0) {
+					if (CoordX > 0 && CoordY > 0) {
+						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
+							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
+								return true;
+						}
+					}
+				} else if (currentPlayer.getOrientation() == 1) {
+					if (CoordX < 29 && CoordY > 0) {
+						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
+							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
+								return true;
+						}
+					}
+				} else if (currentPlayer.getOrientation() == 2) {
+					if (CoordX < 28) {
+						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
+							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
+								return true;
+						}
+					}
+				} else if (currentPlayer.getOrientation() == 3) {
+					if (CoordX < 29 && CoordY < 14)
+						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
+							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
+								return true;
+						}
 
+				} else if (currentPlayer.getOrientation() == 4) {
+					if (CoordX > 0 && CoordY < 14) {
+						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
+							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
+								return true;
+						}
+					}
+				} else if (currentPlayer.getOrientation() == 5) {
+					if (CoordX > 1) {
+						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
+							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
+								return true;
+						}
+					}
+				}
+			}
+			// }catch(Exception ex){
+			// return true;
+			// }
+		} // else{}
 		return false;
 	}
 
-	// called in paintboard; checks if the move being hovered over is legal
 	public boolean checkLegalMove(int o, int x, int y) {
 		if (currentPlayer.getCurrentPiece() != null) {
 			int CoordX = x;
@@ -643,11 +690,9 @@ public class Game
 				}
 			}
 		}
-
 		return false;
 	}
 
-	// called in GreedyStrategy
 	public boolean checkLegalMove(int o, int x, int y, int color1, int color2) {
 		int CoordX = x;
 		int CoordY = y;

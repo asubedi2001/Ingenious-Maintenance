@@ -20,7 +20,7 @@
 //getScore() pass x coordinate
 //primary hexagon
 
-package ingenious;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -441,6 +441,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	private void paintBoard(Graphics g){ //paints the board
 		boolean onSpace = false;
 		boolean strategy = false; //for testing purposes
+		if(game != null && game.getCurrentPlayer() !=null)
 		orientation = game.getCurrentPlayer().getOrientation();
 		for(int x = 1; x<30; x++){
 			for(int y = 0; y<15;y++){
