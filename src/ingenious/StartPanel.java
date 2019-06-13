@@ -138,7 +138,7 @@ public class StartPanel extends JPanel
 		strategy = new String[3];
 		strategy[0] = "Random Strategy";
 		strategy[1] = "Greedy Strategy";
-		strategy[2] = "Very Greedy Strategy";
+		strategy[2] = "Medium Strategy";
 		for (int i = 0; i < 4; i++) {
 			strategies[i] = new JComboBox(strategy);
 			strategies[i].setSelectedIndex(1);

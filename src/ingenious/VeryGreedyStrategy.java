@@ -68,8 +68,6 @@ public class VeryGreedyStrategy extends Strategy
 		xCoord = highestX;
 		yCoord = highestY;
 		orientation = highestOrientation;
-//		makeTempGrid(highestOrientation, highestX, highestY, hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),
-//				hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
 	}
 
 	public int getPieceIndex() {

@@ -78,7 +78,7 @@ public class GreedyStrategy extends Strategy
 									isColor2 = true;
 								}
 							}
-							// makeTempGrid(o, x, y, color1, color2);
+					
 							if ((isColor1 || isColor2) && game.checkLegalMove(o, x, y, color1, color2)) {
 								isMove = true;
 								makeTempGrid(o, x, y, color1, color2);
@@ -87,17 +87,7 @@ public class GreedyStrategy extends Strategy
 								highestY = y;
 								highestOrientation = o;
 								highestPieceIndex = piece;
-								// if (game.score(x, y, tempGrid) > highestScore
-								// || game.score(game.getSecondX(o, x, y),
-								// game.getSecondY(o, x, y), tempGrid) >
-								// highestScore) {
-								// highestScore = game.score(x, y, tempGrid);
-								// //hScore.add(game.score(x, y, tempGrid);
-								// highestX = x;
-								// highestY = y;
-								// highestOrientation = o;
-								// highestPieceIndex = piece;
-								// }
+
 
 							}
 						}
@@ -201,18 +191,6 @@ public class GreedyStrategy extends Strategy
 		makeTempGrid(highestOrientation, highestX, highestY, hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),
 				hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
 
-		// for(int y = 0; y < 15; y++){
-		//// System.out.println("");
-		// for(int x = 0; x < 30;x++){
-		// if(tempGrid[x][y] == 0){
-		// System.out.print(" ");
-		// }else if(tempGrid[x][y] == -1){
-		// System.out.print(0);
-		// }else{
-		// System.out.print(tempGrid[x][y]);
-		// }
-		// }
-		// }
 
 	}
 

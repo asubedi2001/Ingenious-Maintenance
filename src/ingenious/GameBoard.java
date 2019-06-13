@@ -688,7 +688,8 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		repaint();
 	}
 	@Override
-	public void mouseEntered(MouseEvent e) {X = e.getX();
+	public void mouseEntered(MouseEvent e) {
+	X = e.getX();
 	Y = e.getY();
 	repaint();}
 	@Override
@@ -700,11 +701,16 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		repaint();
 	}
 	@Override
-	public void mouseReleased(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mouseReleased(MouseEvent e) {
+		X = e.getX();
+		Y = e.getY();
+		repaint();
+		}
+	
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {X = e.getX();
+	X = e.getX();
 	Y = e.getY();
 	repaint();}
 	public Game getGame() {
