@@ -642,7 +642,8 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	public void setEnabled(boolean b){
 		enabled = b;
 	}
-	public void mouseClicked(MouseEvent e) {//Currently for debugging
+	
+	public void mouseReleased(MouseEvent e) {//Currently for debugging
 		if(enabled){ //<---- ENABLED?!
 			X = e.getX();
 			Y = e.getY();
@@ -682,34 +683,35 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		}
 	}
 
-	public void mouseMoved(MouseEvent e) {
+	// the standard response for mouse events: update the location of the piece currently selected
+	public void mouseUpdate(MouseEvent e) {
 		X = e.getX();
 		Y = e.getY();
 		repaint();
 	}
+	
 	@Override
-	public void mouseEntered(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mouseMoved(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mousePressed(MouseEvent e) {
-		X = e.getX();
-		Y = e.getY();
-		repaint();
-	}
+	public void mouseExited(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mouseReleased(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mousePressed(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mouseDragged(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mouseClicked(MouseEvent e) {mouseUpdate(e);}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {mouseUpdate(e);}
+	
 	public Game getGame() {
 		return game;
 	}
+	
 	public void setGame(Game game) {
 		this.game = game;
 	}
