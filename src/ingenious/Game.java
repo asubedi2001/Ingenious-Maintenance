@@ -1,5 +1,6 @@
 package ingenious;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Game
@@ -217,8 +218,8 @@ public class Game
             p[player].setLowestScore(playerScores[player][0]);
             sortedScores[player] = p[player].getLowestScore();
         }
-        Arrays.sort(p, new sortPlayerScore());
-		return p;
+        Arrays.sort(p, Collections.reverseOrder(new sortPlayerScore()));
+        return p;
 	}
 
 	public int[] getSortedScores() {
