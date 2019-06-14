@@ -265,7 +265,7 @@ public class Game
 		gameStrategies = new Strategy[3];
 		gameStrategies[0] = new RandomStrategy(this);
 		gameStrategies[1] = new GreedyStrategy(this);
-		gameStrategies[2] = new VeryGreedyStrategy(this);
+		gameStrategies[2] = new MediumDifficultyStrategy(this);
 	}
 
 	public void rotate(int direction) {
