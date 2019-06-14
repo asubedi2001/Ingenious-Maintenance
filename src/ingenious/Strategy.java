@@ -13,4 +13,5 @@ public abstract class Strategy
 	abstract public int getXCoordinate();
 	abstract public int getYCoordinate();
 	abstract public int getOrientation();
+	String name = "StrategyName";
 }

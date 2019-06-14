@@ -11,6 +11,7 @@ public class RandomStrategy extends Strategy
 
 	RandomStrategy(Game g) {
 		super(g);
+		name = "Random";
 	}
 
 	public void calculateMove(Hand h, int[] score) {

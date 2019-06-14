@@ -11,8 +11,10 @@ public class VeryGreedyStrategy extends Strategy
 	private int pieceIndex;
 	private int[][] tempGrid;
 
-	VeryGreedyStrategy(Game g) {
+	VeryGreedyStrategy(Game g)
+	{
 		super(g);
+		name = "Very Greedy";
 	}
 
 	private void makeTempGrid(int o, int x, int y, int color1, int color2) {
@@ -42,13 +44,29 @@ public class VeryGreedyStrategy extends Strategy
 				for (int o = 0; o < 6; o++) {
 					for (int piece = 0; piece < game.currentPlayer.getHand().getSize(); piece++) {
 						int color1 = game.currentPlayer.getHand().getPiece(piece).getPrimaryHexagon().getColor();
+						int score1 = game.currentPlayer.getScores()[color1-1];
 						int color2 = game.currentPlayer.getHand().getPiece(piece).getSecondaryHexagon().getColor();
+						int score2 = game.currentPlayer.getScores()[color2-1];
+						
 						// makeTempGrid(o, x, y, color1, color2);
 						if (game.checkLegalMove(o, x, y, color1, color2))
 						{
 							makeTempGrid(o, x, y, color1, color2);
-							int newScore = game.score(x, y, tempGrid);
-							if(newScore > highestScore)
+							int newScore1 = game.score(x, y, tempGrid);
+							int newScore2 = game.score(game.getSecondX(o, x, y), game.getSecondY(o, x, y), tempGrid);
+							int newScore = 0;
+							
+							if(score1 + newScore1 >= 18)
+								newScore += 18 - score1;
+							else
+								newScore += newScore1;
+							
+							if(score2 + newScore2 >= 18)
+								newScore += 18 - score2;
+							else
+								newScore += newScore2;
+							
+							if(newScore >= highestScore)
 							{
 								highestScore = newScore;
 								highestX = x;
@@ -61,15 +79,11 @@ public class VeryGreedyStrategy extends Strategy
 				}
 			}
 		}
-
-		// System.out.println("High Score" + highestScore);
 		pieceIndex = highestPieceIndex;
 		piece = hand.getPiece(pieceIndex);
 		xCoord = highestX;
 		yCoord = highestY;
 		orientation = highestOrientation;
-//		makeTempGrid(highestOrientation, highestX, highestY, hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),
-//				hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
 	}
 
 	public int getPieceIndex() {
