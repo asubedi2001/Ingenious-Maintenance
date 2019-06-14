@@ -382,9 +382,6 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	private void makePiece(/*Piece myPiece*/int x, int y){
 		piece = makeHex(x,y,30);
 	}
-	private Polygon tileChecker(int myX, int myY){// will check every polygon for set of coordinates
-		return piece;
-	}
 	private void orientPiece(Graphics g){
 		if(game.getCurrentPlayer().getCurrentPiece()!= null && game.getCurrentPlayer().getClass() == HumanPlayer.class){
 			makePiece(X,Y);
@@ -442,7 +439,9 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	private void paintBoard(Graphics g){ //paints the board
 		boolean onSpace = false;
 		boolean strategy = false; //for testing purposes
-		orientation = game.getCurrentPlayer().getOrientation();
+		orientation = game.
+				getCurrentPlayer().
+				getOrientation();
 		for(int x = 1; x<30; x++){
 			for(int y = 0; y<15;y++){
 				if(!(hexagon[x][y] == null)){
@@ -559,7 +558,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			}catch(Exception e){}
 		}
 	}
-	
+  
 	public void computerGrid(int[][] newGrid){
 		computerGrid = newGrid;
 	}
@@ -613,12 +612,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		}
 		return hex;
 	}
-	public void setIsHumanPlayer(boolean human){
-		isHumanPlayer = human;
-	}
-	public void getIsHumanPlayer(boolean human){
-		isHumanPlayer = human;
-	}
+
 	public void run() {//update mouse x and y location, or something.
 		while(game.isMoveRemaining() || game.isWinner()){
 			repaint();
@@ -627,7 +621,8 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	public void setEnabled(boolean b){
 		enabled = b;
 	}
-	public void mouseClicked(MouseEvent e) {//Currently for debugging
+	
+	public void mouseReleased(MouseEvent e) {//Currently for debugging
 		if(enabled){ //<---- ENABLED?!
 			X = e.getX();
 			Y = e.getY();
@@ -668,38 +663,38 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		}
 	}
 
-	public void mouseMoved(MouseEvent e) {
+	// the standard response for mouse events: update the location of the piece currently selected
+	public void mouseUpdate(MouseEvent e) {
 		X = e.getX();
 		Y = e.getY();
 		repaint();
 	}
+	
 	@Override
-	public void mouseEntered(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mouseMoved(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mousePressed(MouseEvent e) {
-		X = e.getX();
-		Y = e.getY();
-		repaint();
-	}
+	public void mouseExited(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mouseReleased(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mousePressed(MouseEvent e) {mouseUpdate(e);}
+	
 	@Override
-	public void mouseDragged(MouseEvent e) {X = e.getX();
-	Y = e.getY();
-	repaint();}
+	public void mouseClicked(MouseEvent e) {mouseUpdate(e);}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {mouseUpdate(e);}
+	
 	public Game getGame() {
 		return game;
 	}
+	
 	public void setGame(Game game) {
 		this.game = game;
 	}
-	
 	public void printGameBoardArrays() {
 		
 		if (hexagon != null) {

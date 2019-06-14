@@ -1,0 +1,20 @@
+Ingenious Release Notes June 2019 Delivery 2
+
+- Create more and better computer strategies (nice to have)
+
+- Fix problem with final scores – winning score is listed twice under some circumstances (critical)
+
+- According to comments in GameBoard.java, something with the score breaks when P4 is a human
+and P1 is a computer (unknown importance)
+
+- Fixed strategies not trading in tiles when they had to and getting
+stuck in an infinite loop
+
+- Fixed tiles becoming unplacable at the end of the game
+
+- According to comments in GameBoard.java, something with the score breaks when P4 is a human
+and P1 is a computer (unknown importance)
+
+- Other crashing-related bug fixes
+
+Known issues are in the wishlist.

@@ -18,7 +18,9 @@ public class Game
 	int sleepTimer = 500;
 	Player[] p;
 
+	static int games = 0;
 	Game(String[] names, int[] playerTypes, int[] strategies) {
+		System.out.println(games++);
 		grabBag = new GrabBag();
 		isGameOver = false;
 		players = new Player[names.length];
@@ -42,7 +44,7 @@ public class Game
 				emptyGrid[x][y] = 0;
 			}
 		}
-		
+    
 		currentPlayer = players[0];
 	}
 
@@ -72,12 +74,14 @@ public class Game
 					startScores[i] = currentPlayer.getScores()[i];
 				}
 				if (currentPlayer.checkHand() && currentPlayer.getClass() == HumanPlayer.class) {
-					// JFrame fram = new JFrame("Ingenious");
+
 					HandTrade handTrade = new HandTrade();
 					while (!handTrade.getIsClosed()) {
 						gameBoard.setEnabled(false);
 					}
+
 					gameBoard.setEnabled(true);
+
 					if (handTrade.getIsTrade()) {
 						if (isSecondPlay) {
 							currentPlayer.tradeHandAndMaxOut();
@@ -85,6 +89,8 @@ public class Game
 							currentPlayer.tradeHand();
 						}
 					}
+
+					gameBoard.setEnabled(true);
 				}
 				isSecondPlay = false;
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
@@ -225,7 +231,18 @@ public class Game
 		
 		Arrays.stream(p).forEach(player -> System.out.println(player.getName() + ": " + player.getLowestScore()));
 
-		return p;
+	public Player[] sortPlayers() {
+		Player[] p = Arrays.copyOf(players, players.length);
+        int[][] playerScores = new int[players.length][];
+        sortedScores = new int[p.length];
+        for (int player = 0; player < p.length; player++) {
+            playerScores[player] = Arrays.copyOf(p[player].getScores(),p[player].getScores().length);
+            Arrays.sort(playerScores[player]);
+            p[player].setLowestScore(playerScores[player][0]);
+            sortedScores[player] = p[player].getLowestScore();
+        }
+        Arrays.sort(p, Collections.reverseOrder(new sortPlayerScore()));
+        return p;
 	}
 
 	public void updateGrid(int[][] newGrid) {
@@ -260,9 +277,12 @@ public class Game
 	}
 
 	public void initializeStrategies() {
-		gameStrategies = new Strategy[2];
+		gameStrategies = new Strategy[5];
 		gameStrategies[0] = new RandomStrategy(this);
 		gameStrategies[1] = new GreedyStrategy(this);
+		gameStrategies[2] = new VeryGreedyStrategy(this);
+		gameStrategies[3] = new ReasonablyGreedyStrategy(this);
+		gameStrategies[4] = new MediumDifficultyStrategy(this);
 	}
 
 	public void rotate(int direction) {
@@ -400,64 +420,16 @@ public class Game
 	}
 
 	// UPDATED CHECKLEGALMOVE
+	// called in play (with lagtime)
 	public boolean checkLegalMove() {
 		if (currentPlayer.getCurrentPiece() != null) { // if there is a piece on
 														// the mouse
 			int CoordX = currentPlayer.getPieceX();
 			int CoordY = currentPlayer.getPieceY();
-			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
-			int color2 = currentPlayer.getCurrentPiece().getSecondaryHexagon().getColor();
-			
-			return checkLegalMove(currentPlayer.getOrientation(), CoordX, CoordY, color1, color2);
-//			if (CoordX > -1 && CoordY > -1) {
-//				if (currentPlayer.getOrientation() == 0) {
-//					if (CoordX > 0 && CoordY > 0) {
-//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
-//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
-//								return true;
-//						}
-//					}
-//				} else if (currentPlayer.getOrientation() == 1) {
-//					if (CoordX < 29 && CoordY > 0) {
-//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
-//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
-//								return true;
-//						}
-//					}
-//				} else if (currentPlayer.getOrientation() == 2) {
-//					if (CoordX < 28) {
-//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
-//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
-//								return true;
-//						}
-//					}
-//				} else if (currentPlayer.getOrientation() == 3) {
-//					if (CoordX < 29 && CoordY < 14)
-//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
-//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
-//								return true;
-//						}
-//
-//				} else if (currentPlayer.getOrientation() == 4) {
-//					if (CoordX > 0 && CoordY < 14) {
-//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
-//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
-//								return true;
-//						}
-//					}
-//				} else if (currentPlayer.getOrientation() == 5) {
-//					if (CoordX > 1) {
-//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
-//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
-//								return true;
-//						}
-//					}
-//				}
-//			}
-		}
 		return false;
 	}
 
+	// called in paintboard; checks if the move being hovered over is legal
 	public boolean checkLegalMove(int o, int x, int y) {
 		if (currentPlayer.getCurrentPiece() != null) {
 			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
@@ -509,9 +481,11 @@ public class Game
 //				}
 //			}
 		}
+
 		return false;
 	}
 
+	// called in GreedyStrategy
 	public boolean checkLegalMove(int o, int x, int y, int color1, int color2) {
 		int CoordX = x;
 		int CoordY = y;
