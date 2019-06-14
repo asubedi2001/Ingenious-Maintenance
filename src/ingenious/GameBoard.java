@@ -381,9 +381,6 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	private void makePiece(/*Piece myPiece*/int x, int y){
 		piece = makeHex(x,y,30);
 	}
-	private Polygon tileChecker(int myX, int myY){// will check every polygon for set of coordinates
-		return piece;
-	}
 	private void orientPiece(Graphics g){
 		if(game.getCurrentPlayer().getCurrentPiece()!= null && game.getCurrentPlayer().getClass() == HumanPlayer.class){
 			makePiece(X,Y);
@@ -478,20 +475,6 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 
 					g.setColor(Color.BLACK);
 					g.drawPolygon(hexagon[x][y]); // draws hex outline
-					//                	if(game.getCurrentPlayer().getClass() == ComputerPlayer.class && (x == game.getCurrentPlayer().getPieceX() &&
-					//                			y == game.getCurrentPlayer().getPieceY()) || (x == game.getSecondX(game.getCurrentPlayer().getOrientation(), game.getCurrentPlayer().getPieceX(), game.getCurrentPlayer().getPieceY()) &&
-					//                			y == game.getSecondY(game.getCurrentPlayer().getOrientation(), game.getCurrentPlayer().getPieceX(), game.getCurrentPlayer().getPieceY()))){
-					//                		g.setColor(Color.WHITE);
-					//                    	g.drawPolygon(hexagon[x][y]);
-					//                	}
-					//                	if(computerGrid[x][y] != 0){
-					//                		g.setColor(Color.RED);
-					//                		((Graphics2D)g).setStroke(new BasicStroke(5));
-					//                		g.drawPolygon(hexagon[x][y]);
-					//                	}else{
-					//                		g.setColor(Color.BLACK);
-					//                    	g.drawPolygon(hexagon[x][y]);
-					//                	}
 					((Graphics2D)g).setStroke(new BasicStroke(1));
 					g.setColor(Color.WHITE);
 				}
@@ -574,9 +557,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			}catch(Exception e){}
 		}
 	}
-	public void paintOutline(Graphics g){
 
-	}
 	public void computerGrid(int[][] newGrid){
 		computerGrid = newGrid;
 	}
@@ -628,12 +609,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		}
 		return hex;
 	}
-	public void setIsHumanPlayer(boolean human){
-		isHumanPlayer = human;
-	}
-	public void getIsHumanPlayer(boolean human){
-		isHumanPlayer = human;
-	}
+
 	public void run() {//update mouse x and y location, or something.
 		while(game.isMoveRemaining() || game.isWinner()){
 			repaint();
@@ -720,46 +696,4 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 		this.game = game;
 	}
 }
-/*	private void paintScore(Graphics g){
-		horizontalLines(g);
-		verticalLines(g);
-		//score drawing below
-		g.drawRect(50,650,400,140);
-		int c=85;
-		for(int counter = 0;counter < game.getCurrentPlayer().getHand().getSize(); counter++){ // <--GET HUMAN PLAYERS HAND
-			if(game.getCurrentPlayer().isHuman()){
-				game.getCurrentPlayer().getHand().getPiece(counter);
-				int color=game.getCurrentPlayer().getHand().getPiece(counter).getSecondaryHexagon().getColor();
-				g.setColor(pickColor(color));
-				g.fillPolygon(makeScoreHex(c,693,30));
-				color=game.getCurrentPlayer().getHand().getPiece(counter).getPrimaryHexagon().getColor();
-				g.setColor(pickColor(color));
-				g.fillPolygon(makeScoreHex(c,745,30));
-				c+=65;
-			}else{		//it's a computer player
-				int count = 0;
-				for(int ind = 0; ind < game.players.length; ind++){//need to find the indice of the current computer player
-						if(game.players[ind] == game.getCurrentPlayer()){
-							count = ind;
-						}
-				}
-				//if there is a computer player in p1, then find = -1 and for loop doesnt go
-				for(int find = count; find >= 0; find--){//find the most recent human player
-					//NOT WORKING WHEN P4 IS HUMAN, and P1 is computer
-					if(game.players[find].isHuman()){
-						game.players[find].getHand().getPiece(counter);
-						int color=game.players[find].getHand().getPiece(counter).getSecondaryHexagon().getColor();
-						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c,693,30));
-						color=game.players[find].getHand().getPiece(counter).getPrimaryHexagon().getColor();
-						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c,745,30));
-						c+=65;
-						find = -1;
-					}else if(find == 0){
-						find = game.players.length; //if its on p1
-					}
-				}
-			}
-		}
-	}*/
+

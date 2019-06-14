@@ -61,20 +61,16 @@ public class MediumDifficultyStrategy extends Strategy
 
 
      double boardPercentageFilled =(numOfFilledPositions()/numOfPositions()) *100 ;
-    // System.out.println("Number of Positions Held: "+ numOfPositions());
-    // System.out.println("Number of Filled Positions Held: "+ numOfFilledPositions());
-    // System.out.println("boardPercentageFilled: " + boardPercentageFilled);
+     System.out.println("Number of Positions Held: "+ numOfPositions());
+     System.out.println("Number of Filled Positions Held: "+ numOfFilledPositions());
+     System.out.println("boardPercentageFilled: " + boardPercentageFilled);
      Hand hand = game.getCurrentPlayer().getHand();
 		game.getCurrentPlayer().tradeHand();
-     if(boardPercentageFilled >= 60){
-    	//enter in strat
+     if(boardPercentageFilled >= 20){// CHANGE THIS NUMBER HERE FOR THE STRATEGY
     	 greedyCalculateMove(h, score);
-    	 //System.out.println("Entered Into Greedy Strategy");
-    	 return;// sorta bad code over here, but I run into a infinite loop somewhere without.
-    	 
-       // System.out.println("More than 60% of board is filled");
+    	 return;
      }else{//if less than 60% of the board is filled
-    	 //System.out.println("Entered Into Cat Strat Strategy");	
+
     	 for (int x = 0; x < 30; x++) {
     			for (int y = 0; y < 15; y++) {
     				for (int o = 0; o < 6; o++) {
@@ -100,14 +96,12 @@ public class MediumDifficultyStrategy extends Strategy
     			}
     		}
      }// end of else
-     
-		// System.out.println("High Score" + highestScore);
+
 		pieceIndex = highestPieceIndex;
 		piece = hand.getPiece(pieceIndex);
 		xCoord = highestX;
 		yCoord = highestY;
 		orientation = highestOrientation;
-
   }
 
   public void greedyCalculateMove(Hand h, int[] score) {
@@ -273,8 +267,6 @@ public class MediumDifficultyStrategy extends Strategy
 			makeTempGrid(highestOrientation, highestX, highestY, hand.getPiece(pieceIndex).getPrimaryHexagon().getColor(),
 					hand.getPiece(pieceIndex).getSecondaryHexagon().getColor());
 
-
-		
   }
   
   public int getPieceIndex() {
