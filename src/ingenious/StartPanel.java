@@ -134,12 +134,13 @@ public class StartPanel extends JPanel
 
 	// INITIALIZES AND POSITIONS STRATEGY SCROLLDOWN WINDOW
 	private void setStrategyBoxes() {
-		strategies = new JComboBox[4];
-		strategy = new String[4];
+		strategies = new JComboBox[5];
+		strategy = new String[5];
 		strategy[0] = "Random Strategy";
-		strategy[1] = "Greedy Strategy";
+		strategy[1] = "Conservatively Greedy Strategy";
 		strategy[2] = "Very Greedy Strategy";
 		strategy[3] = "Reasonably Greedy Strategy";
+		strategy[4] = "Medium Strategy";
 		for (int i = 0; i < 4; i++) {
 			strategies[i] = new JComboBox(strategy);
 			strategies[i].setSelectedIndex(1);
