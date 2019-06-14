@@ -204,14 +204,14 @@ public class Game
 		}
 		return nameOrder;
 	}
-	
+
 	public class sortPlayerScore implements Comparator<Player> {
 
         public int compare(Player one, Player two) {
             return Integer.compare(one.getLowestScore(), two.getLowestScore());
         }
     }
-	
+
 	public Player[] sortPlayers() {
 		Player[] p = Arrays.copyOf(players, players.length);
         int[][] playerScores = new int[players.length][];
@@ -262,10 +262,12 @@ public class Game
 	}
 
 	public void initializeStrategies() {
-		gameStrategies = new Strategy[3];
+		gameStrategies = new Strategy[5];
 		gameStrategies[0] = new RandomStrategy(this);
 		gameStrategies[1] = new GreedyStrategy(this);
-		gameStrategies[2] = new MediumDifficultyStrategy(this);
+		gameStrategies[2] = new VeryGreedyStrategy(this);
+		gameStrategies[3] = new ReasonablyGreedyStrategy(this);
+		gameStrategies[4] = new MediumDifficultyStrategy(this);
 	}
 
 	public void rotate(int direction) {

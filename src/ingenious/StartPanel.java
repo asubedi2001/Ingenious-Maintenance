@@ -134,11 +134,13 @@ public class StartPanel extends JPanel
 
 	// INITIALIZES AND POSITIONS STRATEGY SCROLLDOWN WINDOW
 	private void setStrategyBoxes() {
-		strategies = new JComboBox[4];
-		strategy = new String[3];
+		strategies = new JComboBox[5];
+		strategy = new String[5];
 		strategy[0] = "Random Strategy";
-		strategy[1] = "Greedy Strategy";
-		strategy[2] = "Medium Strategy";
+		strategy[1] = "Conservatively Greedy Strategy";
+		strategy[2] = "Very Greedy Strategy";
+		strategy[3] = "Reasonably Greedy Strategy";
+		strategy[4] = "Medium Strategy";
 		for (int i = 0; i < 4; i++) {
 			strategies[i] = new JComboBox(strategy);
 			strategies[i].setSelectedIndex(1);
@@ -184,15 +186,9 @@ public class StartPanel extends JPanel
 	public int[] getStrategies() {
 		int[] ret = new int[4];
 		for (int c = 0; c < 4; c++) {
-			if (strategies[c].isEnabled()) {
-				if (strategies[c].getSelectedIndex() == 0) {
-					ret[c] = 1;
-				} else if (strategies[c].getSelectedIndex() == 1) {
-					ret[c] = 2;
-				} else if (strategies[c].getSelectedIndex() == 2) {
-					ret[c] = 3;
-				}
-			} else { // if not selected
+			if (strategies[c].isEnabled())
+				ret[c] = strategies[c].getSelectedIndex()+1;
+			else { // if not selected
 				ret[c] = 0;
 			}
 		}
@@ -311,7 +307,7 @@ public class StartPanel extends JPanel
 		cont.addActionListener(stratListener);
 		error = new JLabel("Input error: please input an integer");
 		error.setVisible(false);
-		
+
 		this.add(title);
 		this.add(new JLabel(""));
 		this.add(prompt);
