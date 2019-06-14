@@ -442,11 +442,12 @@ public class Game
 	}
 
 	public void initializeStrategies() {
-		gameStrategies = new Strategy[4];
+		gameStrategies = new Strategy[5];
 		gameStrategies[0] = new RandomStrategy(this);
 		gameStrategies[1] = new GreedyStrategy(this);
 		gameStrategies[2] = new VeryGreedyStrategy(this);
 		gameStrategies[3] = new ReasonablyGreedyStrategy(this);
+		gameStrategies[4] = new MediumStrategy(this);
 	}
 
 	public void rotate(int direction) {
