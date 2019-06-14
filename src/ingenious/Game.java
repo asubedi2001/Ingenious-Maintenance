@@ -1,5 +1,7 @@
 package ingenious;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Game
 {
@@ -15,7 +17,6 @@ public class Game
 	String[] playerNames;
 	int sleepTimer = 500;
 	Player[] p;
-	int[] sortedScores;
 
 	Game(String[] names, int[] playerTypes, int[] strategies) {
 		grabBag = new GrabBag();
@@ -41,6 +42,8 @@ public class Game
 				emptyGrid[x][y] = 0;
 			}
 		}
+		
+		currentPlayer = players[0];
 	}
 
 	public void play(int lagTime) throws InterruptedException {
@@ -85,7 +88,7 @@ public class Game
 				}
 				isSecondPlay = false;
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
-					//Thread.sleep(lagTime * 1000);
+					Thread.sleep(lagTime * 1000);
 				}
 				do {
 					if (currentPlayer.getClass() == ComputerPlayer.class) {
@@ -93,16 +96,19 @@ public class Game
 							currentPlayer.getHand().addNewPiece(currentPlayer.getCurrentPiece());
 							currentPlayer.removeCurrentPiece();
 						}
+						
+						currentPlayer.move();
 					}
-					// currentPlayer.resetDefault();
-					currentPlayer.move();
+					
 					gameBoard.repaint();
+					//gameBoard.printGameBoardArrays();
+					//this.printGameBoardArrays();
 				} while (!checkLegalMove());
 				gameBoard.computerGrid(emptyGrid);
 				if (currentPlayer.getClass() == ComputerPlayer.class) {
 					gameBoard.computerGrid(twoHexGrid(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 							currentPlayer.getPieceY()));
-					//Thread.sleep(sleepTimer);
+					Thread.sleep(sleepTimer);
 				}
 				currentPlayer.updateScore(getTurnScore(currentPlayer.getOrientation(), currentPlayer.getPieceX(),
 						currentPlayer.getPieceY()));
@@ -194,212 +200,229 @@ public class Game
 		}
 		return nameOrder;
 	}
-
-	public Player[] sortPlayers() {
-
-		if (players.length == 2) {
-
-			p = new Player[2];
-			sortedScores = new int[2];
-			int[][] score = new int[2][6];
-			int[] a = new int[6];
-			for (int i = 0; i < 6; i++) {
-				a[i] = players[0].getScores()[i];
-			}
-			Arrays.sort(a);
-			players[0].setLowestScore(a[0]);
-			int[] b = new int[6];
-			for (int i = 0; i < 6; i++) {
-				b[i] = players[1].getScores()[i];
-			}
-			Arrays.sort(b);
-			players[1].setLowestScore(b[0]);
-			for (int i = 0; i < 2; i++) {
-				for (int j = 0; j < 6; j++) {
-					if (i == 0) {
-						score[i][j] = a[j];
-					} else if (i == 1) {
-						score[i][j] = b[j];
-					}
-				}
-			}
-
-			if (score[0][0] > score[1][0]) {
-				p[0] = players[0];
-				p[1] = players[1];
-			} else if (score[0][0] > score[1][0]) {
-				p[0] = players[1];
-				p[1] = players[0];
-			} else {
-				if (score[0][1] > score[1][1]) {
-					p[0] = players[0];
-					p[1] = players[1];
-				} else {
-					p[0] = players[1];
-					p[1] = players[0];
-				}
-			}
-			sortedScores[0] = p[0].getLowestScore();
-			sortedScores[1] = p[1].getLowestScore();
+	
+	public class sortPlayerByScore implements Comparator<Player> {
+		
+		public int compare(Player one, Player two) {
+			
+			return Integer.compare(one.getLowestScore(), two.getLowestScore());
 		}
-
-		else if (players.length == 3) {
-
-			p = new Player[3];
-			sortedScores = new int[3];
-			int[][] score = new int[3][6];
-			int[] a = new int[6];
-			;
-			for (int i = 0; i < 6; i++) {
-				a[i] = players[0].getScores()[i];
-			}
-			Arrays.sort(a);
-			players[0].setLowestScore(a[0]);
-			int[] b = new int[6];
-			for (int i = 0; i < 6; i++) {
-				b[i] = players[1].getScores()[i];
-			}
-			Arrays.sort(b);
-			players[1].setLowestScore(b[0]);
-			int[] c = new int[6];
-			for (int i = 0; i < 6; i++) {
-				c[i] = players[2].getScores()[i];
-			}
-			Arrays.sort(c);
-			players[2].setLowestScore(c[0]);
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 6; j++) {
-					if (i == 0) {
-						score[i][j] = a[j];
-					} else if (i == 1) {
-						score[i][j] = b[j];
-					} else if (i == 2) {
-						score[i][j] = c[j];
-					}
-				}
-			}
-			int highest = 0;
-			for (int i = 0; i < 3; i++) {
-				if (score[i][0] > score[highest][0]) {
-					highest = i;
-				}
-			}
-
-			p[0] = players[highest];
-			int secondHighest = Math.abs(highest - 1);
-			for (int i = 0; i < 3; i++) {
-				if (score[i][0] > score[secondHighest][0] && i != highest) {
-					secondHighest = i;
-				}
-			}
-			int thirdHighest = 5;
-
-			p[1] = players[secondHighest];
-			for (int i = 0; i < 3; i++) {
-				if (i != highest && i != secondHighest) {
-					thirdHighest = i;
-				}
-			}
-
-			p[2] = players[thirdHighest];
-			for (int i = 0; i < 2; i++) {
-				if (score[i][0] == score[i + 1][0]) {
-
-				}
-			}
-			sortedScores[0] = p[0].getLowestScore();
-			sortedScores[1] = p[1].getLowestScore();
-			sortedScores[2] = p[2].getLowestScore();
-		} else if (players.length == 4) {
-
-			p = new Player[4];
-			sortedScores = new int[4];
-			int[][] score = new int[4][6];
-			int[] a = new int[6];
-			for (int i = 0; i < 6; i++) {
-				a[i] = players[0].getScores()[i];
-			}
-			Arrays.sort(a);
-			players[0].setLowestScore(a[0]);
-			int[] b = new int[6];
-			for (int i = 0; i < 6; i++) {
-				b[i] = players[1].getScores()[i];
-			}
-			Arrays.sort(b);
-			players[1].setLowestScore(b[0]);
-			int[] c = new int[6];
-			for (int i = 0; i < 6; i++) {
-				c[i] = players[2].getScores()[i];
-			}
-			Arrays.sort(c);
-			players[2].setLowestScore(c[0]);
-			int[] d = new int[6];
-			for (int i = 0; i < 6; i++) {
-				d[i] = players[3].getScores()[i];
-			}
-			Arrays.sort(d);
-			players[3].setLowestScore(d[0]);
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 6; j++) {
-					if (i == 0) {
-						score[i][j] = a[j];
-					} else if (i == 1) {
-						score[i][j] = b[j];
-					} else if (i == 2) {
-						score[i][j] = c[j];
-					} else if (i == 3) {
-						score[i][j] = d[j];
-					}
-				}
-			}
-
-			int highest = 0;
-			for (int i = 0; i < 4; i++) {
-				if (score[i][0] > score[highest][0]) {
-					highest = i;
-				}
-			}
-
-			p[0] = players[highest];
-			int secondHighest = 0;
-			for (int i = 0; i < 4; i++) {
-				if (score[i][0] > score[secondHighest][0] && i != highest) {
-					secondHighest = i;
-				}
-			}
-
-			p[1] = players[secondHighest];
-			int firstRemaining = 5;
-			int secondRemaining = 5;
-			for (int i = 0; i < 4; i++) {
-				if (i != highest && i != secondHighest) {
-					firstRemaining = i;
-				}
-			}
-			for (int i = 0; i < 4; i++) {
-				if (i != highest && i != secondHighest && i != firstRemaining) {
-					secondRemaining = i;
-				}
-			}
-
-			if (score[firstRemaining][0] > score[secondRemaining][0]) {
-				p[2] = players[firstRemaining];
-				p[3] = players[secondRemaining];
-			} else {
-				p[3] = players[firstRemaining];
-				p[2] = players[secondRemaining];
-			}
-			sortedScores[0] = p[0].getLowestScore();
-			sortedScores[1] = p[1].getLowestScore();
-			sortedScores[2] = p[2].getLowestScore();
-			sortedScores[3] = p[3].getLowestScore();
-		}
-
-		return p;
 	}
 
-	public int[] getSortedScores() {
-		return sortedScores;
+	public Player[] sortPlayers() {
+		
+		Player[] p = Arrays.copyOf(players, players.length);
+		int[][] playerScores = new int[players.length][];
+		
+		for (int player = 0; player < p.length; player++) {
+			
+			playerScores[player] = Arrays.copyOf(p[player].getScores(), p[player].getScores().length);
+			Arrays.sort(playerScores[player]);
+			p[player].setLowestScore(playerScores[player][0]);
+		}
+		
+		Arrays.sort(p, Collections.reverseOrder(new sortPlayerByScore()));
+		
+		Arrays.stream(p).forEach(player -> System.out.println(player.getName() + ": " + player.getLowestScore()));
+//		if (players.length == 2) {
+//
+//			p = new Player[2];
+//			sortedScores = new int[2];
+//			int[][] score = new int[2][6];
+//			int[] a = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				a[i] = players[0].getScores()[i];
+//			}
+//			Arrays.sort(a);
+//			players[0].setLowestScore(a[0]);
+//			int[] b = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				b[i] = players[1].getScores()[i];
+//			}
+//			Arrays.sort(b);
+//			players[1].setLowestScore(b[0]);
+//			for (int i = 0; i < 2; i++) {
+//				for (int j = 0; j < 6; j++) {
+//					if (i == 0) {
+//						score[i][j] = a[j];
+//					} else if (i == 1) {
+//						score[i][j] = b[j];
+//					}
+//				}
+//			}
+//
+//			if (score[0][0] > score[1][0]) {
+//				p[0] = players[0];
+//				p[1] = players[1];
+//			} else if (score[0][0] > score[1][0]) {
+//				p[0] = players[1];
+//				p[1] = players[0];
+//			} else {
+//				if (score[0][1] > score[1][1]) {
+//					p[0] = players[0];
+//					p[1] = players[1];
+//				} else {
+//					p[0] = players[1];
+//					p[1] = players[0];
+//				}
+//			}
+//			sortedScores[0] = p[0].getLowestScore();
+//			sortedScores[1] = p[1].getLowestScore();
+//		}
+//
+//		else if (players.length == 3) {
+//
+//			p = new Player[3];
+//			sortedScores = new int[3];
+//			int[][] score = new int[3][6];
+//			int[] a = new int[6];
+//			;
+//			for (int i = 0; i < 6; i++) {
+//				a[i] = players[0].getScores()[i];
+//			}
+//			Arrays.sort(a);
+//			players[0].setLowestScore(a[0]);
+//			int[] b = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				b[i] = players[1].getScores()[i];
+//			}
+//			Arrays.sort(b);
+//			players[1].setLowestScore(b[0]);
+//			int[] c = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				c[i] = players[2].getScores()[i];
+//			}
+//			Arrays.sort(c);
+//			players[2].setLowestScore(c[0]);
+//			for (int i = 0; i < 3; i++) {
+//				for (int j = 0; j < 6; j++) {
+//					if (i == 0) {
+//						score[i][j] = a[j];
+//					} else if (i == 1) {
+//						score[i][j] = b[j];
+//					} else if (i == 2) {
+//						score[i][j] = c[j];
+//					}
+//				}
+//			}
+//			int highest = 0;
+//			for (int i = 0; i < 3; i++) {
+//				if (score[i][0] > score[highest][0]) {
+//					highest = i;
+//				}
+//			}
+//
+//			p[0] = players[highest];
+//			int secondHighest = Math.abs(highest - 1);
+//			for (int i = 0; i < 3; i++) {
+//				if (score[i][0] > score[secondHighest][0] && i != highest) {
+//					secondHighest = i;
+//				}
+//			}
+//			int thirdHighest = 5;
+//
+//			p[1] = players[secondHighest];
+//			for (int i = 0; i < 3; i++) {
+//				if (i != highest && i != secondHighest) {
+//					thirdHighest = i;
+//				}
+//			}
+//
+//			p[2] = players[thirdHighest];
+//			for (int i = 0; i < 2; i++) {
+//				if (score[i][0] == score[i + 1][0]) {
+//
+//				}
+//			}
+//			sortedScores[0] = p[0].getLowestScore();
+//			sortedScores[1] = p[1].getLowestScore();
+//			sortedScores[2] = p[2].getLowestScore();
+//		} else if (players.length == 4) {
+//
+//			p = new Player[4];
+//			sortedScores = new int[4];
+//			int[][] score = new int[4][6];
+//			int[] a = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				a[i] = players[0].getScores()[i];
+//			}
+//			Arrays.sort(a);
+//			players[0].setLowestScore(a[0]);
+//			int[] b = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				b[i] = players[1].getScores()[i];
+//			}
+//			Arrays.sort(b);
+//			players[1].setLowestScore(b[0]);
+//			int[] c = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				c[i] = players[2].getScores()[i];
+//			}
+//			Arrays.sort(c);
+//			players[2].setLowestScore(c[0]);
+//			int[] d = new int[6];
+//			for (int i = 0; i < 6; i++) {
+//				d[i] = players[3].getScores()[i];
+//			}
+//			Arrays.sort(d);
+//			players[3].setLowestScore(d[0]);
+//			for (int i = 0; i < 4; i++) {
+//				for (int j = 0; j < 6; j++) {
+//					if (i == 0) {
+//						score[i][j] = a[j];
+//					} else if (i == 1) {
+//						score[i][j] = b[j];
+//					} else if (i == 2) {
+//						score[i][j] = c[j];
+//					} else if (i == 3) {
+//						score[i][j] = d[j];
+//					}
+//				}
+//			}
+//
+//			int highest = 0;
+//			for (int i = 0; i < 4; i++) {
+//				if (score[i][0] > score[highest][0]) {
+//					highest = i;
+//				}
+//			}
+//
+//			p[0] = players[highest];
+//			int secondHighest = 0;
+//			for (int i = 0; i < 4; i++) {
+//				if (score[i][0] > score[secondHighest][0] && i != highest) {
+//					secondHighest = i;
+//				}
+//			}
+//
+//			p[1] = players[secondHighest];
+//			int firstRemaining = 5;
+//			int secondRemaining = 5;
+//			for (int i = 0; i < 4; i++) {
+//				if (i != highest && i != secondHighest) {
+//					firstRemaining = i;
+//				}
+//			}
+//			for (int i = 0; i < 4; i++) {
+//				if (i != highest && i != secondHighest && i != firstRemaining) {
+//					secondRemaining = i;
+//				}
+//			}
+//
+//			if (score[firstRemaining][0] > score[secondRemaining][0]) {
+//				p[2] = players[firstRemaining];
+//				p[3] = players[secondRemaining];
+//			} else {
+//				p[3] = players[firstRemaining];
+//				p[2] = players[secondRemaining];
+//			}
+//			sortedScores[0] = p[0].getLowestScore();
+//			sortedScores[1] = p[1].getLowestScore();
+//			sortedScores[2] = p[2].getLowestScore();
+//			sortedScores[3] = p[3].getLowestScore();
+//		}
+
+		return p;
 	}
 
 	public void updateGrid(int[][] newGrid) {
@@ -579,112 +602,109 @@ public class Game
 														// the mouse
 			int CoordX = currentPlayer.getPieceX();
 			int CoordY = currentPlayer.getPieceY();
-			// try{
 			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
 			int color2 = currentPlayer.getCurrentPiece().getSecondaryHexagon().getColor();
-			if (CoordX > -1 && CoordY > -1) {
-				if (currentPlayer.getOrientation() == 0) {
-					if (CoordX > 0 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 1) {
-					if (CoordX < 29 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 2) {
-					if (CoordX < 28) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 3) {
-					if (CoordX < 29 && CoordY < 14)
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
-								return true;
-						}
-
-				} else if (currentPlayer.getOrientation() == 4) {
-					if (CoordX > 0 && CoordY < 14) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 5) {
-					if (CoordX > 1) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
-								return true;
-						}
-					}
-				}
-			}
-			// }catch(Exception ex){
-			// return true;
-			// }
-		} // else{}
+			
+			return checkLegalMove(currentPlayer.getOrientation(), CoordX, CoordY, color1, color2);
+//			if (CoordX > -1 && CoordY > -1) {
+//				if (currentPlayer.getOrientation() == 0) {
+//					if (CoordX > 0 && CoordY > 0) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 1) {
+//					if (CoordX < 29 && CoordY > 0) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 2) {
+//					if (CoordX < 28) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 3) {
+//					if (CoordX < 29 && CoordY < 14)
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
+//								return true;
+//						}
+//
+//				} else if (currentPlayer.getOrientation() == 4) {
+//					if (CoordX > 0 && CoordY < 14) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 5) {
+//					if (CoordX > 1) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
+//								return true;
+//						}
+//					}
+//				}
+//			}
+		}
 		return false;
 	}
 
 	public boolean checkLegalMove(int o, int x, int y) {
 		if (currentPlayer.getCurrentPiece() != null) {
-			int CoordX = x;
-			int CoordY = y;
 			int color1 = currentPlayer.getCurrentPiece().getPrimaryHexagon().getColor();
 			int color2 = currentPlayer.getCurrentPiece().getSecondaryHexagon().getColor();
-			if (CoordX > -1 && CoordY > -1) {
-				if (currentPlayer.getOrientation() == 0) {
-					if (CoordX > 0 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 1) {
-					if (CoordX < 29 && CoordY > 0) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 2) {
-					if (CoordX < 28) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 3) {
-					if (CoordX < 29 && CoordY < 14)
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
-								return true;
-						}
-
-				} else if (currentPlayer.getOrientation() == 4) {
-					if (CoordX > 0 && CoordY < 14) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
-								return true;
-						}
-					}
-				} else if (currentPlayer.getOrientation() == 5) {
-					if (CoordX > 1) {
-						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
-							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
-								return true;
-						}
-					}
-				}
-			}
+			return checkLegalMove(currentPlayer.getOrientation(), x, y, color1, color2);
+//			if (CoordX > -1 && CoordY > -1) {
+//				if (currentPlayer.getOrientation() == 0) {
+//					if (CoordX > 0 && CoordY > 0) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY - 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY - 1))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 1) {
+//					if (CoordX < 29 && CoordY > 0) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY - 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY - 1))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 2) {
+//					if (CoordX < 28) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 2)][(CoordY)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 2, CoordY))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 3) {
+//					if (CoordX < 29 && CoordY < 14)
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX + 1)][(CoordY + 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX + 1, CoordY + 1))
+//								return true;
+//						}
+//
+//				} else if (currentPlayer.getOrientation() == 4) {
+//					if (CoordX > 0 && CoordY < 14) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 1)][(CoordY + 1)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 1, CoordY + 1))
+//								return true;
+//						}
+//					}
+//				} else if (currentPlayer.getOrientation() == 5) {
+//					if (CoordX > 1) {
+//						if (grid[CoordX][CoordY] == -1 && grid[(CoordX - 2)][(CoordY)] == -1) {
+//							if (checkAround(color1, CoordX, CoordY) || checkAround(color2, CoordX - 2, CoordY))
+//								return true;
+//						}
+//					}
+//				}
+//			}
 		}
 		return false;
 	}
@@ -888,6 +908,23 @@ public class Game
 			return isMove;
 		}
 
+	}
+	
+	public void printGameBoardArrays() {
+		
+		if (emptyGrid != null) {
+			System.out.println("emptyGrid Grid");
+			Arrays.stream(emptyGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+		
+		if (tempGrid != null) {
+			System.out.println("tempGrid Grid");
+			Arrays.stream(tempGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+		if (grid != null) {
+			System.out.println("grid Grid");
+			Arrays.stream(grid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
 	}
 
 }

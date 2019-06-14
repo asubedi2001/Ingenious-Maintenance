@@ -33,6 +33,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -476,20 +477,6 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 
 					g.setColor(Color.BLACK);
 					g.drawPolygon(hexagon[x][y]); // draws hex outline
-					//                	if(game.getCurrentPlayer().getClass() == ComputerPlayer.class && (x == game.getCurrentPlayer().getPieceX() &&
-					//                			y == game.getCurrentPlayer().getPieceY()) || (x == game.getSecondX(game.getCurrentPlayer().getOrientation(), game.getCurrentPlayer().getPieceX(), game.getCurrentPlayer().getPieceY()) &&
-					//                			y == game.getSecondY(game.getCurrentPlayer().getOrientation(), game.getCurrentPlayer().getPieceX(), game.getCurrentPlayer().getPieceY()))){
-					//                		g.setColor(Color.WHITE);
-					//                    	g.drawPolygon(hexagon[x][y]);
-					//                	}
-					//                	if(computerGrid[x][y] != 0){
-					//                		g.setColor(Color.RED);
-					//                		((Graphics2D)g).setStroke(new BasicStroke(5));
-					//                		g.drawPolygon(hexagon[x][y]);
-					//                	}else{
-					//                		g.setColor(Color.BLACK);
-					//                    	g.drawPolygon(hexagon[x][y]);
-					//                	}
 					((Graphics2D)g).setStroke(new BasicStroke(1));
 					g.setColor(Color.WHITE);
 				}
@@ -572,12 +559,11 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			}catch(Exception e){}
 		}
 	}
-	public void paintOutline(Graphics g){
-
-	}
+	
 	public void computerGrid(int[][] newGrid){
 		computerGrid = newGrid;
 	}
+	
 	public void updateGrid(int[][] newGrid){
 		for(int x = 0; x<30; x++){
 			for(int y = 0; y<15;y++){
@@ -585,6 +571,7 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			}
 		}
 	}
+	
 	private void setGrid(int x, int y, int c){ //sets intitial colors
 		hexColor[x][y] = c;
 	}
@@ -647,16 +634,17 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 			for(int x = 0; x < 30; x++){
 				for(int y = 0; y < 15;y++){
 					try{
-						if(hexagon[x][y]!= null && hexagon[x][y].contains(e.getX(),e.getY())){
+						if(hexagon[x][y]!= null && hexagon[x][y].contains(X, Y)){
 
 							if(game.getCurrentPlayer().getCurrentPiece() != null){
 								game.setPiece(x,y);
 							}
 						}
 						if(x < 6 && y < 2){
-							if(handPieces[x][y]!= null && handPieces[x][y].contains(e.getX(),e.getY())){
+							if(handPieces[x][y]!= null && handPieces[x][y].contains(X, Y)){
 								if(game.getCurrentPlayer().getCurrentPiece() == null){
 									game.select(x);
+									System.out.println("Piece Collected");
 								}
 							}
 						}
@@ -711,47 +699,29 @@ public class GameBoard extends JPanel implements Runnable,MouseListener,MouseMot
 	public void setGame(Game game) {
 		this.game = game;
 	}
-}
-/*	private void paintScore(Graphics g){
-		horizontalLines(g);
-		verticalLines(g);
-		//score drawing below
-		g.drawRect(50,650,400,140);
-		int c=85;
-		for(int counter = 0;counter < game.getCurrentPlayer().getHand().getSize(); counter++){ // <--GET HUMAN PLAYERS HAND
-			if(game.getCurrentPlayer().isHuman()){
-				game.getCurrentPlayer().getHand().getPiece(counter);
-				int color=game.getCurrentPlayer().getHand().getPiece(counter).getSecondaryHexagon().getColor();
-				g.setColor(pickColor(color));
-				g.fillPolygon(makeScoreHex(c,693,30));
-				color=game.getCurrentPlayer().getHand().getPiece(counter).getPrimaryHexagon().getColor();
-				g.setColor(pickColor(color));
-				g.fillPolygon(makeScoreHex(c,745,30));
-				c+=65;
-			}else{		//it's a computer player
-				int count = 0;
-				for(int ind = 0; ind < game.players.length; ind++){//need to find the indice of the current computer player
-						if(game.players[ind] == game.getCurrentPlayer()){
-							count = ind;
-						}
-				}
-				//if there is a computer player in p1, then find = -1 and for loop doesnt go
-				for(int find = count; find >= 0; find--){//find the most recent human player
-					//NOT WORKING WHEN P4 IS HUMAN, and P1 is computer
-					if(game.players[find].isHuman()){
-						game.players[find].getHand().getPiece(counter);
-						int color=game.players[find].getHand().getPiece(counter).getSecondaryHexagon().getColor();
-						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c,693,30));
-						color=game.players[find].getHand().getPiece(counter).getPrimaryHexagon().getColor();
-						g.setColor(pickColor(color));
-						g.fillPolygon(makeScoreHex(c,745,30));
-						c+=65;
-						find = -1;
-					}else if(find == 0){
-						find = game.players.length; //if its on p1
-					}
-				}
-			}
+	
+	public void printGameBoardArrays() {
+		
+		if (hexagon != null) {
+			System.out.println("Hexagon Grid");
+			Arrays.stream(hexagon).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
 		}
-	}*/
+		
+		if (handPieces != null) {
+			System.out.println("HandPieces Grid");
+			Arrays.stream(handPieces).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> {if (I != null) {System.out.print("HEXA ");} else {System.out.print("____ ");}});System.out.println("]");});
+		}
+		if (hexColor != null) {
+			System.out.println("HexColor Grid");
+			Arrays.stream(hexColor).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+		if (gameBoardTempGrid != null) {
+			System.out.println("gameBoardTemp Grid");
+			Arrays.stream(gameBoardTempGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+		if (computerGrid != null) {
+			System.out.println("Computer Grid");
+			Arrays.stream(computerGrid).forEach(r -> {System.out.print("[");Arrays.stream(r).forEach(I -> System.out.print(I + " "));System.out.println("]");});
+		}
+	}
+}

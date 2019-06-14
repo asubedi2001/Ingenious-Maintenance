@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -18,17 +19,17 @@ public class GameOver extends JFrame implements ActionListener
 	boolean cancel;
 	String[] players;
 	Player[] orderOfPlayers;
-	int[] Scores;
 	JPanel pan, pan1;
 
-	public GameOver(Player[] orderOfPlayers, int[] scores) {
-		this.orderOfPlayers = orderOfPlayers;
-		int numPlayers = orderOfPlayers.length;
-		players = new String[orderOfPlayers.length];
-		for (int a = 0; a < orderOfPlayers.length; a++) {
-			players[a] = orderOfPlayers[a].getName();
+	public GameOver(Player[] newOrderOfPlayers) {
+		this.orderOfPlayers = newOrderOfPlayers;
+		int numPlayers = newOrderOfPlayers.length;
+		players = new String[numPlayers];
+		
+		for (int a = 0; a < numPlayers; a++) {
+			players[a] = newOrderOfPlayers[a].getName();
 		}
-		Scores = scores;
+		
 		pan = new JPanel();
 		pan1 = new JPanel();
 		ScorePanel scorePanel = new ScorePanel();
@@ -60,7 +61,7 @@ public class GameOver extends JFrame implements ActionListener
 			JLabel player = new JLabel(orderOfPlayers[i].getName());
 			player.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
 			player.setForeground(colors[i]);
-			JLabel score = new JLabel("" + scores[i]);
+			JLabel score = new JLabel("" + orderOfPlayers[i].getLowestScore());
 			score.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
 			score.setForeground(colors[i]);
 
@@ -82,19 +83,9 @@ public class GameOver extends JFrame implements ActionListener
 	}
 
 	private Color[] colorRanks(int numPlayers) {
-		Color[] colors = new Color[numPlayers];
-		for (int p = 0; p < colors.length; p++) {// wont go beyond length
-			if (p == 0) {
-				colors[p] = Color.YELLOW;
-			} else if (p == 1) {
-				colors[p] = Color.BLUE;
-			} else if (p == 2) {
-				colors[p] = Color.RED;
-			} else if (p == 3) {
-				colors[p] = Color.GREEN;
-			}
-		}
-		return colors;
+		Color[] colors = new Color[] {Color.YELLOW, Color.BLUE, Color.RED, Color.GREEN};
+		
+		return Arrays.copyOf(colors, numPlayers);
 	}
 
 	public boolean cancel() {
