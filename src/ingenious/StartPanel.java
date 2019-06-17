@@ -44,7 +44,6 @@ public class StartPanel extends JPanel
 		if (first) {
 			gameWindow = g;
 			// this.setBackground(Color.BLUE);
-			this.setSize(600, 500);
 			this.setLayout(new GridLayout(7, 4));
 			handle = new InputHandler();
 			setRadioButtons(); // handles ALL BUTTONS

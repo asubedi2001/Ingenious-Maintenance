@@ -9,6 +9,4 @@ chooses randomly between them (nice to have)
 
 GreedyStrategy has been observed once to hang at the end of a game (important)
 
-Size of the window is not set properly
-
 Strategy analysis mode only shows the first two strategies

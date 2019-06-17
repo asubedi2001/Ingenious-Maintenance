@@ -31,7 +31,7 @@ public class GameWindow
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		slider.addChangeListener(new SliderListener());
-		container.setPreferredSize(new Dimension(600,500));
+		container.setPreferredSize(new Dimension(900,500));
 		sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.PAGE_AXIS));
 		JLabel label = new JLabel("Choose Computer Player Lag Time:");
 		label.setHorizontalAlignment((int) JPanel.CENTER_ALIGNMENT);
