@@ -17,7 +17,6 @@ public class Game
 	String[] playerNames;
 	int sleepTimer = 500;
 	Player[] p;
-	int[] sortedScores;
 
 	static int games = 0;
 	Game(String[] names, int[] playerTypes, int[] strategies) {
@@ -215,19 +214,13 @@ public class Game
 	public Player[] sortPlayers() {
 		Player[] p = Arrays.copyOf(players, players.length);
         int[][] playerScores = new int[players.length][];
-        sortedScores = new int[p.length];
         for (int player = 0; player < p.length; player++) {
             playerScores[player] = Arrays.copyOf(p[player].getScores(),p[player].getScores().length);
             Arrays.sort(playerScores[player]);
             p[player].setLowestScore(playerScores[player][0]);
-            sortedScores[player] = p[player].getLowestScore();
         }
         Arrays.sort(p, Collections.reverseOrder(new sortPlayerScore()));
         return p;
-	}
-
-	public int[] getSortedScores() {
-		return sortedScores;
 	}
 
 	public void updateGrid(int[][] newGrid) {

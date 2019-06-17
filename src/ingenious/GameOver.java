@@ -21,14 +21,14 @@ public class GameOver extends JFrame implements ActionListener
 	int[] Scores;
 	JPanel pan, pan1;
 
-	public GameOver(Player[] orderOfPlayers, int[] scores) {
+	public GameOver(Player[] orderOfPlayers) {
+
 		this.orderOfPlayers = orderOfPlayers;
 		int numPlayers = orderOfPlayers.length;
 		players = new String[orderOfPlayers.length];
 		for (int a = 0; a < orderOfPlayers.length; a++) {
 			players[a] = orderOfPlayers[a].getName();
 		}
-		Scores = scores;
 		pan = new JPanel();
 		pan1 = new JPanel();
 		ScorePanel scorePanel = new ScorePanel();
@@ -60,7 +60,7 @@ public class GameOver extends JFrame implements ActionListener
 			JLabel player = new JLabel(orderOfPlayers[i].getName());
 			player.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
 			player.setForeground(colors[i]);
-			JLabel score = new JLabel("" + scores[i]);
+			JLabel score = new JLabel("" + orderOfPlayers[i].getLowestScore());
 			score.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
 			score.setForeground(colors[i]);
 

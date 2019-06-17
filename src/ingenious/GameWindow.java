@@ -102,8 +102,8 @@ public class GameWindow
 				e.printStackTrace();
 			}
 			frame.dispose();
-			frame = new GameOver(game.sortPlayers(), game.getSortedScores());
-			frame.setPreferredSize(new Dimension(1500,800));
+			frame = new GameOver(game.sortPlayers());
+			frame.setMinimumSize(new Dimension(1500,800));
 			frame.pack();
 			frame.setVisible(true);
 			while(!((GameOver) frame).cancel()){
